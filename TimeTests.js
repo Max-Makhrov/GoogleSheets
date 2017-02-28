@@ -26,3 +26,77 @@ function timingDecorator(f, timer) {
   }
 }
 
+/*
+  _______ ______  _____ _______ _____ 
+ |__   __|  ____|/ ____|__   __/ ____|
+    | |  | |__  | (___    | | | (___  
+    | |  |  __|  \___ \   | |  \___ \ 
+    | |  | |____ ____) |  | |  ____) |
+    |_|  |______|_____/   |_| |_____/ 
+                                                                           
+*/
+
+
+/*
+   Test what faster: 
+      1. use `ImportRange` function → conbert it into values
+      2. get data directly from taget sheet
+      
+   Results:
+      1. 2193 ms
+      2. 587 ms
+
+*/
+   function TESTgetValueImport() {
+     var strSheet = 'test_Import';
+     var strFormula = '=IMPORTRANGE("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX","SheetFrom!A6:W")';
+     //-------------------------------------------------
+     var file = SpreadsheetApp.getActiveSpreadsheet();
+     var sheet = file.getSheetByName(strSheet);
+     var rangeA1 = sheet.getRange(1, 1);
+     rangeA1.setFormula(strFormula);
+
+     SpreadsheetApp.flush();
+
+     var range = sheet.getDataRange();
+     var data = range.getValues();
+     range.setValues(data);
+   }
+
+   function TESTgetValueDirectly() {
+     var strSheet = 'test_Import';
+     var strKeyFrom = '1hrEsRVvilJi3aaVJV7dNzjIRoNtLtT0F50gD0pFYBtw';
+     var strSheetFrom = 'Анкеты'
+     var numRowStartFrom = 6;
+     var numColStartFrom = 1;
+     var numColumnsFrom = 23;
+     //-------------------------------------------------
+     var fileFrom = SpreadsheetApp.openById(strKeyFrom);
+     var sheetFrom = fileFrom.getSheetByName(strSheetFrom);
+     var numLastRowFrom = sheetFrom.getLastRow();
+     var numRowsFrom = numLastRowFrom - numRowStartFrom + 1;
+     var range = sheetFrom.getRange(numRowStartFrom, numColStartFrom, numRowsFrom, numColumnsFrom);
+     var data = range.getValues();
+
+     var file = SpreadsheetApp.getActiveSpreadsheet();
+     var sheet = file.getSheetByName(strSheet);
+     var range = sheet.getRange(1, 1, numRowsFrom, numColumnsFrom);
+     range.setValues(data);
+
+
+   }
+
+   function TIME_TESTgetValue() {
+
+     // Import
+     var tester = timingDecorator(TESTgetValueImport, "Import");
+     tester();
+     Logger.log( timers.Import + ' ms' ); // 2193 ms
+     // Directly
+
+     var tester2 = timingDecorator(TESTgetValueDirectly, "Directly");
+     tester2();
+     Logger.log( timers.Directly + ' ms' ); // 587 ms  
+
+   }
+
