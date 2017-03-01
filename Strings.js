@@ -43,3 +43,11 @@ function TESTbyteCount() {
   Logger.log(Math.ceil(lenInBites / 9000));
   
 }
+
+
+/*
+  works like function REGEXREPLACE
+*/  
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
