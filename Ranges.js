@@ -26,8 +26,8 @@ function getSheetContent(SS, strSheet, numRow, numCol, numRows, numCols) {
   
   numRow = numRow || 1;
   numCol = numCol || 1;
-  numRows = numRows || sheet.getLastRow();
-  numCols = numCols || sheet.getLastColumn();
+  numRows = numRows || sheet.getLastRow() - numRow + 1;;
+  numCols = numCols || sheet.getLastColumn() - numCol + 1;;
 
   range = sheet.getRange(numRow, numCol, numRows, numCols);
   
