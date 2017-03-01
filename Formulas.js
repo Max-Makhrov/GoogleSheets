@@ -1,3 +1,10 @@
+/*
+  This file use:
+    https://github.com/Max-Makhrov/GoogleSheets/blob/master/Strings.js
+
+*/
+
+
 /**
  * Get 2d array with results like this:
  * row   column     formula
@@ -20,7 +27,7 @@ function getFormulas(strSheet, rangeA1, skipHeaders) {
 
 
 function TESTGetFormulasSheets() {
-var sheets = [['Стафф','Бух','Дизайн']];
+var sheets = [['Staff','Buh','Design']];
 Logger.log(getFormulasSheets(sheets));
 
 }
@@ -152,7 +159,4 @@ function buildFormula(cell, formula) {
       formula = replaceAll(formula, STR_SLASH, "\\");      
       
       cell.setFormula(formula);
-}
-function replaceAll(str, find, replace) {
-  return str.replace(new RegExp(find, 'g'), replace);
 }
