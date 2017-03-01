@@ -24,6 +24,12 @@ var STR_EVAL = 'eval';
 
 function writeSettings() { 
   // set the net of all parametres
+  /* 
+    defaults
+      * file -- active file
+      * key = name of range
+      to run defaults use (false, STR_EVAL) 
+  */
   setPropertyFromNamedRange(false, STR_EVAL);
 }
 
