@@ -18,7 +18,7 @@ function getSheetContent(SS, strSheet, numRow, numCol, numRows, numCols) {
   var data = [];
   
   // if starting row is undefined, get all cells
-  if (!numRow) {
+  if (!numRow && !numCol && !numRows && !numCols) {
     range = sheet.getDataRange();
     data = range.getValues();
     return data;
