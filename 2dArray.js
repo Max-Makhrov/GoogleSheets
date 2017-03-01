@@ -41,3 +41,63 @@ function transpose(a) {
 
   return t;
 }
+
+
+/* extrectColumnsFromTableData
+  
+  * Det data from simple table
+  
+  data = []
+ [[ 'Name'  ,'Age', 'Sal'],
+  [ 'Tom'   ,   18,   500],  
+  [ 'Mike'  ,   25,    15],
+  [ 'Max'   ,   30,  2000]]
+  
+  columns = []
+  ["Name", "Sal"]
+  
+  return = [] 
+  only selected columns
+  | Name  | Sal |
+  | Tom   |  500|
+  | Mike  |   15|
+  | Max   | 2000|  
+
+*/
+function extrectColumnsFromTableData(data, columns) {
+  var indexs = [];    
+  var head = data[0];
+  
+  for (var i = 0; i < head.length; i++) {
+    if (columns.indexOf(head[i]) > -1) { indexs.push(i); }    
+  }
+  
+  if (indexs == []) { return []; }
+  
+  var result = [];
+  var row = [];
+  
+  for (var i = 1; i < data.length; i++) {
+    row = [];
+    for (var j = 0; j < indexs.length; j++) { row.push(data[i][indexs[j]]); }                
+    result.push(row);
+  }
+    
+  return result;
+}
+
+function TESTextrectColumnsFromTableData() {
+  var data = [[ 'Name'  , 'Age', 'Sal'],
+              [ 'Tom'   ,   18,   500],  
+              [ 'Mike'  ,   25,    15],
+              [ 'Max'   ,   30,  2000]];
+  
+  var columns = ["Name", "Sal"];
+  
+  Logger.log(extrectColumnsFromTableData(data, columns)); 
+              /*
+                [[Tom, 500.0], 
+                 [Mike, 15.0], 
+                 [Max, 2000.0]]  
+              */ 
+}
