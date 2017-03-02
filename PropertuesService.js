@@ -49,8 +49,9 @@ function readSettings() {
 }
 
 // tests
-function TESTwriteReadProps() {   
-    Logger.log(getPropertyAsArray(STR_EVAL));
+function TESTwriteReadProps() { 
+   writeSettings()
+   Logger.log(getPropertyAsArray(STR_EVAL));
 }
 
 
