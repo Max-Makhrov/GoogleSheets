@@ -50,7 +50,7 @@ function readSettings() {
 
 // tests
 function TESTwriteReadProps() { 
-   writeSettings()
+   writeSettings();
    Logger.log(getPropertyAsArray(STR_EVAL));
 }
 
