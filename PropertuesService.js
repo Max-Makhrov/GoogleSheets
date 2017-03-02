@@ -22,6 +22,11 @@
 
 var STR_EVAL = 'eval';
 
+var STR_CONST1;
+var NUM_CONST2;
+var STR_CONST3;
+var NUM_CONST4;
+
 function writeSettings() { 
   // set the net of all parametres
   /* 
@@ -32,11 +37,6 @@ function writeSettings() {
   */
   setPropertyFromNamedRange(false, STR_EVAL);
 }
-
-var STR_CONST1;
-var NUM_CONST2;
-var STR_CONST3;
-var NUM_CONST4;
 
 function readSettings() {
   var data = getPropertyAsArray(STR_EVAL);
@@ -53,10 +53,6 @@ function TESTwriteReadProps() {
     Logger.log(getPropertyAsArray(STR_EVAL));
 }
 
-// onOpen
-function onOpen() {
-  writeSettings();
-}
 
 /*
    _____          _      
