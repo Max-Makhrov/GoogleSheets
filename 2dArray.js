@@ -43,7 +43,7 @@ function transpose(a) {
 }
 
 
-/* extrectColumnsFromTableData
+/* Extract Columns From Table Data
   
   * Det data from simple table
   
@@ -101,3 +101,4 @@ function TESTextrectColumnsFromTableData() {
                  [Max, 2000.0]]  
               */ 
 }
+
