@@ -60,7 +60,7 @@ function TESTwriteDataIntoSheet() {
 /*
 
   input 
-    * ids                          '16rzrnZrAQK9czPHOfANJNsDN1_Ni3ecU40GStF3aWSM'
+    * ids                          '16rzrnZrAQK9czPHOfAN...'
                             
                             or 2Darray:
                               
