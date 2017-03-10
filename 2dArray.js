@@ -125,3 +125,110 @@ http://stackoverflow.com/questions/14824283/convert-a-2d-javascript-array-to-a-1
 function get1DArray(arr){
     return arr.join().split(",");
 }
+
+
+/*
+              _     _    _____      _                           
+     /\      | |   | |  / ____|    | |                          
+    /  \   __| | __| | | |     ___ | |_   _ _ __ ___  _ __  ___ 
+   / /\ \ / _` |/ _` | | |    / _ \| | | | | '_ ` _ \| '_ \/ __|
+  / ____ \ (_| | (_| | | |___| (_) | | |_| | | | | | | | | \__ \
+ /_/    \_\__,_|\__,_|  \_____\___/|_|\__,_|_| |_| |_|_| |_|___/
+                                                                
+*/
+
+function TESTaddToArray() {
+
+  var a = [[1, 'a'],
+           [2, 'b'],
+           [3, 'c']];
+  
+  var b = [[4, 'd'],
+           [5, 'e'],
+           [6, 'f']];
+  //a.extend(b);  
+  //a.push.apply(a, b)
+  
+  var c = addColumnsToArray(a, b);
+  Logger.log(c); // the result: [[1, a, 4.0, d], [2, b, 5.0, e], [3, c, 6.0, f]]
+  Logger.log(a); // remains
+  Logger.log(b); // remains
+  
+  var d = [1, 'a'];
+  
+  var e = addValuesToArray(d, a);
+  Logger.log(e); // the result:  
+  //Logger.log(a); // remains
+  //Logger.log(d); // remains  
+
+}
+
+
+/*
+
+  arr1  = [[1, 'a'],
+           [2, 'b'],
+           [3, 'c']];
+  
+  arr2  = [[4, 'd'],
+           [5, 'e'],
+           [6, 'f']];
+           
+  result 
+          [[1, 'a', 4, 'd'], 
+           [2, 'b', 5, 'e'], 
+           [3, 'c', 6, 'f']]
+
+*/
+
+function addColumnsToArray(arr1, arr2) {
+
+  var self = this;
+  this.arr2 = arr2;
+  
+  function appendColumns(currentValue, index) {  
+    self.arr2[index].forEach(function(val) { currentValue.push(val); });
+  }
+  
+  // to prevent affecting original array
+  var arr = JSON.parse(JSON.stringify(arr1));
+    
+  arr.map(appendColumns);
+  
+  return arr;
+
+}
+
+/*
+
+  arr1  =  [1, 'a'];
+  
+  arr2  = [[4, 'd'],
+           [5, 'e'],
+           [6, 'f']];
+           
+  result 
+          [[1, 'a', 4, 'd'], 
+           [1, 'a', 5, 'e'], 
+           [1, 'a', 6, 'f']]
+
+*/
+
+function addValuesToArray(arr1, arr2) {
+
+  var self = this;
+  this.arr1 = arr1;
+  
+  function appendColumns(currentValue) { 
+    self.arr1.forEach(function(val) { currentValue.unshift(val); });    
+  }
+  
+  // to prevent affecting original array
+  var arr = JSON.parse(JSON.stringify(arr2));
+  
+  arr.map(appendColumns);
+  
+  return arr;
+
+}
+                  
