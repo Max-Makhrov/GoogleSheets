@@ -102,3 +102,26 @@ function TESTextrectColumnsFromTableData() {
               */ 
 }
 
+
+/*
+
+input:
+  * arr        [[0,0,1],[2,3,3],[4,4,5]];
+  
+
+result:        ["0", "0", "1", "2", "3", "3", "4", "4", "5"] 
+
+Othe possidle way:
+http://stackoverflow.com/questions/14824283/convert-a-2d-javascript-array-to-a-1d-array
+  function convert2dArrayTo1d(arrToConvert) {
+    var newArr = [];
+    for(var i = 0; i < arrToConvert.length; i++)
+      {
+          newArr = newArr.concat(arrToConvert[i]);
+      } 
+    return newArr;  
+  }
+*/
+function get1DArray(arr){
+    return arr.join().split(",");
+}
