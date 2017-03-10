@@ -109,8 +109,7 @@ function getSheetsInfo(ids) {
 
 }
 function TESTgetSheetsInfo() {
-  //var ids = [['16rzrnZrAQK9czPHOfANJNsDN1_Ni3ecU40GStF3aWSM'], ['1ld-Ww6WiOO8r39vcOPcFKPbRKc-6BiZ8eUR1ThtWGh8']];
-  var ids = ['16rzrnZrAQK9czPHOfANJNsDN1_Ni3ecU40GStF3aWSM', '1ld-Ww6WiOO8r39vcOPcFKPbRKc-6BiZ8eUR1ThtWGh8'];
+  var ids = ['16rzrnZrAQK9cz...', '1ld-Ww6WiOO8r39vcOPcF...'];
   var data = getSheetsInfo(ids);
   Logger.log(data);
 
