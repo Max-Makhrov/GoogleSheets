@@ -103,8 +103,6 @@ function getTableDescription(file, rHeaders) {
   var sheet = headers.getSheet();
   var lastRow = sheet.getLastRow();
   
-  // write the headers into the result
-  var result = headers.getValues();
      
   var maxRows = 100;
   var numRows = lastRow - headRow;
@@ -120,6 +118,9 @@ function getTableDescription(file, rHeaders) {
     // reset head range   
     headers = sheet.getRange(numRow, numColumn, 1, numLastColumn - numColumn + 1);  
   }
+
+  // write the headers into the result
+  var result = headers.getValues();
   
   // return if table is empty
   if (lastRow <= headRow) {
