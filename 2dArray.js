@@ -200,7 +200,6 @@ function addColumnsToArray(arr1, arr2) {
 }
 
 /*
-
   arr1  =  [1, 'a'];
   
   arr2  = [[4, 'd'],
@@ -211,7 +210,6 @@ function addColumnsToArray(arr1, arr2) {
           [[1, 'a', 4, 'd'], 
            [1, 'a', 5, 'e'], 
            [1, 'a', 6, 'f']]
-
 */
 
 function addValuesToArray(arr1, arr2) {
@@ -219,16 +217,16 @@ function addValuesToArray(arr1, arr2) {
   var self = this;
   this.arr1 = arr1;
   
-  function appendColumns(currentValue) { 
-    self.arr1.forEach(function(val) { currentValue.unshift(val); });    
+  function appendValues(currentValue) {
+    return self.arr1.concat(currentValue);
   }
   
   // to prevent affecting original array
   var arr = JSON.parse(JSON.stringify(arr2));
   
-  arr.map(appendColumns);
+  var result = arr.map(appendValues);
   
-  return arr;
+  return result;
 
 }
                   
