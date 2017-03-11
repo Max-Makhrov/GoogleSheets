@@ -6,10 +6,69 @@
 
 function TESTgetTableDescription() {
 
-  var rHeaders = 'Payments!1:1';
+  var rHeaders = "'Sheets'!1:1";
   Logger.log(getTableDescription(false, rHeaders));
 
 }
+
+/*
+  Get table descriptions with data types for several files and sheets
+  
+  Input
+    * files          ['10GTfX...', '1a3MHxE...', ...]
+                     ^file_id^^^^^^^file_id^^^^^^fil^
+                     
+    * headers        ["'Sheet1'!2:2", "'Sheet2'!7:7", ...]                 
+    
+  Output
+    array:
+    
+    [['id'*, 'fileId', 'fileName',  'sheetId,  'sheetName', 'header', 'Field Name', 'Data Type'],    
+     ['...', '16rr...', 'My Fi...', 'sdFg...', 'my she...', "S2!2:2", 'Date',       'DATE'     ],
+     ['...', '16rr...', 'My Fi...', 'sdFg...', 'my she...', "S2!2:2", 'Name'        'VARCHAR'  ],
+     ['...', '16rr...', 'My Fi...', 'sdFg...', 'my she...', "S2!2:2", 'OrderId',    'INTEGER'  ],
+     ['...', '16rr...', 'My Fi...', 'sdFg...', 'my she...', "S2!2:2", 'Sum',        'FLOAT'    ],
+      ...
+     ['...', '...',      '...',      '...',     '...',       "...",    '...',        '...'     ]]
+    ---------------------------------------------------------------------------------------------
+    * id = fileName/sheetName/fileId/sheetId  
+*/
+function getTableDescriptions(files, headers) {
+  var file, sheet, range;
+  var header = '';
+  var fileId = '';
+  var fileName = '';
+  var sheetId = 0;
+  var sheetName = '';
+  var id = ''
+  var rangeInfo = [];
+  var dataTypes = [];
+  var line = [];
+  var result = [];
+  result.push(['id', 'fileId', 'fileName',  'sheetId',  'sheetName', 'header', 'Field Name', 'Data Type'])
+  
+  // loop files
+  for (var i = 0; i < files.length; i++) {
+    fileId = files[i];
+    file = SpreadsheetApp.openById(fileId);
+    fileName = file.getName();
+    header = headers[i]
+    range = file.getRange(header);
+    sheet = range.getSheet();
+    sheetId = sheet.getSheetId();
+    sheetName = sheet.getName(); 
+    id = fileName + '/' + sheetName + '/' + fileId + '/' + sheetId;
+    rangeInfo = [];
+    rangeInfo = [id, fileId, fileName, sheetId, sheetName, header];    
+    dataTypes = getTableDescription(file, header);
+    line = addValuesToArray(rangeInfo, dataTypes);
+    result = result.concat(line);
+  }
+  
+  return result;
+
+}
+
 
 
 /*
@@ -44,9 +103,9 @@ function getTableDescription(file, rHeaders) {
   var sheet = headers.getSheet();
   var lastRow = sheet.getLastRow();
   
-  // return if table is empty
-  if (lastRow <= headRow) return 'Table has no contents.';
-  
+  // write the headers into the result
+  var result = headers.getValues();
+     
   var maxRows = 100;
   var numRows = lastRow - headRow;
   if (numRows > maxRows) numRows = maxRows;
@@ -58,8 +117,19 @@ function getTableDescription(file, rHeaders) {
   var numLastColumn = sheet.getLastColumn();
   var numLastColumnHead = headers.getLastColumn();
   if (numLastColumn < numLastColumnHead) { 
-    // reset head range
-    headers = sheet.getRange(numRow, numColumn, 1, numLastColumn - numRow + 1);  
+    // reset head range   
+    headers = sheet.getRange(numRow, numColumn, 1, numLastColumn - numColumn + 1);  
+  }
+  
+  // return if table is empty
+  if (lastRow <= headRow) {
+    // copy first row of array: headers
+    var arrNoContents = result[0];
+    // fill array with 'no contents'
+    arrNoContents.map(function(value) { return 'no contents'; } );
+    // Logger.log('Table "' + sheet.getName() + '" has no contents.');
+    result.push(arrNoContents);
+    return transpose(result);
   }
 
   var numColumns = headers.getWidth();
@@ -70,7 +140,6 @@ function getTableDescription(file, rHeaders) {
   
   // get all data types
   var dataTypes = getDataTypes(data);
-  var result = headers.getValues();
   
   result.push(dataTypes);
   
