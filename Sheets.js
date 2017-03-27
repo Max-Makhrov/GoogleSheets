@@ -1,6 +1,10 @@
 /*
   
-  Note: this code use
+  Note: 
+    link to original code:
+    https://github.com/Max-Makhrov/GoogleSheets/edit/master/Sheets.js
+  
+    this code use:
     https://github.com/Max-Makhrov/GoogleSheets/blob/master/2dArray.js
 
 */
