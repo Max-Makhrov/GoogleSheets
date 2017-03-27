@@ -33,14 +33,18 @@
   If strSheet doesn't exist → creates new sheet
                                     
 */
-function writeDataIntoSheet(file, strSheet, data) {
+function writeDataIntoSheet(file, strSheet, data, rowStart, colStart) {
   file = file || SpreadsheetApp.getActiveSpreadsheet();
   var sheet = createSheetIfNotExists(file, strSheet);
   
   var numRows = data.length;
   var numCols = data[0].length;
   
-  var range = sheet.getRange(1, 1, numRows, numCols);
+  
+  rowStart = rowStart || 1;
+  colStart = colStart || 1;
+  
+  var range = sheet.getRange(rowStart, colStart, numRows, numCols);
   sheet.clearContents()
 
   range.setValues(data);
