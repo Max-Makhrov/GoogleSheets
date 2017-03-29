@@ -339,7 +339,8 @@ function getFormulaTokenizer() {
     <_________>  Educate me...
 
 */
-  var tokenizer = new Tokenizer();  
+  var tokenizer = new Tokenizer(); 
+  tokenizer.addToken('string', "'.*'", 'value');  
   tokenizer.addToken('whitespace', '\\s+', 'whitespace');
   tokenizer.addToken('l_paren', '\\(', 'l_paren');
   tokenizer.addToken('r_paren', '\\)', 'r_paren');
@@ -348,7 +349,6 @@ function getFormulaTokenizer() {
   tokenizer.addToken('int', '[0-9]+', 'value');
   tokenizer.addToken('mul', '\\*', 'multiplication');
   tokenizer.addToken('add', '\\+', 'addition');
-  tokenizer.addToken('string', "'[a-zA-Z_][a-zA-Z0-9_]*'", 'value');
   tokenizer.addToken('eqv', '\\=', 'comparison');
   tokenizer.addToken('less_eqv', '\\<=', 'comparison');
   tokenizer.addToken('more_eqv', '\\>=', 'comparison');
