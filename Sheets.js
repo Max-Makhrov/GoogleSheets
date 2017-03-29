@@ -49,7 +49,7 @@ function writeDataIntoSheet(file, strSheet, data, rowStart, colStart) {
   colStart = colStart || 1;
   
   var range = sheet.getRange(rowStart, colStart, numRows, numCols);
-  sheet.clearContents()
+    if(!rowStart && !colStart) { sheet.clearContents(); }
 
   range.setValues(data);
   
