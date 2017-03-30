@@ -557,11 +557,11 @@ function TESTfillRight2d() {
                  ['b1', 250, 'dog' ],
                  ['c1', 400, 'bird']];
 */
-function leftJoinArrays(arr1, arr2, columns1, columns2) {
+function leftJoinArrays(arr1, arr2, columns1, columns2) { 
   
   // convert arr2 into object  
   var obj2 = convertArrayToObject(arr2, columns2);
-  
+
   // get dafault array
   var numElms = arr2[0].length - columns2.length;
   var defaultArr = [];
@@ -572,17 +572,16 @@ function leftJoinArrays(arr1, arr2, columns1, columns2) {
   var row = [];
   var addRow = [];
   var result = [];
-  var newRow = []
+  var newRow = [];
+  var numCols1 = arr1[0].length;
   for (var i = 0; i < arr1.length; i++) {
     row = arr1[i];
     // get only lookup columns
-    lookVal = row.reduce( 
-                function(total, currentValue, currentIndex) { 
-                   if (columns1.indexOf(currentIndex) > -1) {
-                     return '' + total + currentValue;
-                   }
-                   return '' + total;
-               });
+    lookVal = '';
+    for (var j = 0; j < numCols1; j++) {
+      if (columns1.indexOf(j) > -1) { lookVal = '' + lookVal + row[j]; }    
+    }
+                      
      addRow = [];          
      addRow = obj2[lookVal] || defaultArr;     
      newRow = row.concat(addRow);     
