@@ -447,3 +447,189 @@ function TESTfillRight2d() {
   Logger.log(arr);
 
 }
+
+
+
+
+/*
+
+       _       _                 __      ___             _                
+      | |     (_)         ___    \ \    / / |           | |               
+      | | ___  _ _ __    ( _ )    \ \  / /| | ___   ___ | | ___   _ _ __  
+  _   | |/ _ \| | '_ \   / _ \/\   \ \/ / | |/ _ \ / _ \| |/ / | | | '_ \ 
+ | |__| | (_) | | | | | | (_>  <    \  /  | | (_) | (_) |   <| |_| | |_) |
+  \____/ \___/|_|_| |_|  \___/\/     \/   |_|\___/ \___/|_|\_\\__,_| .__/ 
+                                                                   | |    
+                                                                   |_|    
+
+*/
+
+/*
+
+  * input:
+  
+    arr1 =        [['a1', 500],
+                   ['a1', 300],
+                   ['a2', 100],
+                   ['b1', 250],
+                   ['c1', 400]];
+                   
+     arr2 =       [['a', 'cat',  1],
+                   ['b', 'dog',  1],
+                   ['c', 'bird', 1]];
+                      
+     columns1 =   [0];         // 
+                               // > columns are zero-based
+     columns2 =   [0, 2];      //  
+   
+   
+  
+  * outpput: add columns:
+    [arr1 + arr2] except list in columns2
+    default = '' if not found;
+    
+
+   result =     [['a1', 500, 'cat' ],
+                 ['a1', 300, 'cat' ],
+                 ['a2', 100, ''    ],
+                 ['b1', 250, 'dog' ],
+                 ['c1', 400, 'bird']];
+*/
+function leftJoinArrays(arr1, arr2, columns1, columns2) {
+  
+  // convert arr2 into object  
+  var obj2 = convertArrayToObject(arr2, columns2);
+  
+  // get dafault array
+  var numElms = arr2[0].length - columns2.length;
+  var defaultArr = [];
+  for (var x = 0; x < numElms; x++) { defaultArr.push(''); }
+  
+  // loop arr1
+  var lookVal = '';
+  var row = [];
+  var addRow = [];
+  var result = [];
+  var newRow = []
+  for (var i = 0; i < arr1.length; i++) {
+    row = arr1[i];
+    // get only lookup columns
+    lookVal = row.reduce( 
+                function(total, currentValue, currentIndex) { 
+                   if (columns1.indexOf(currentIndex) > -1) {
+                     return '' + total + currentValue;
+                   }
+                   return '' + total;
+               });
+     addRow = [];          
+     addRow = obj2[lookVal] || defaultArr;     
+     newRow = row.concat(addRow);     
+     result.push(newRow);
+  }
+  
+  return result;
+
+}
+
+function TESTleftJoinArrays() {
+
+    var arr1 =    [['a1', 500],
+                   ['a1', 300],
+                   ['a2', 100],
+                   ['b1', 250],
+                   ['c1', 400]];
+                   
+    var arr2 =    [['a', 'cat',  1],
+                   ['b', 'dog',  1],
+                   ['c', 'bird', 1]];
+                      
+    var columns1 =   [0];      // 
+                               // > columns are zero-based
+    var  columns2 =   [0, 2];  //  
+     
+    var result = leftJoinArrays(arr1, arr2, columns1, columns2);
+    
+    Logger.log(result); // [[a1, 500.0, cat], [a1, 300.0, cat], [a2, 100.0, ], [b1, 250.0, dog], [c1, 400.0, bird]]
+
+
+}
+
+/*
+  
+  * input:
+  
+ 
+     arr2 =       [['a', 'cat',  1],
+                   ['b', 'dog',  1],
+                   ['c', 'bird', 1]];
+
+
+    keyColumns =  [0, 2];
+    
+    // Note! The code assumes vakue-key pairs are unique:
+    //   a1, b1, c1 
+     
+     
+    
+  * result
+  
+   object = { 
+              a1: ['cat'],
+              b1: ['dog'],
+              c1: ['bird']
+            };
+
+
+
+*/
+
+function convertArrayToObject(arr, keyColumns) {
+  var result = {};
+  
+  var row = [];
+  var keyArr = [];
+  var valueArr = [];
+  var key = '';
+  
+  for(var i = 0; i < arr.length; i++) {
+  
+    row = arr[i];
+    keyArr = [];
+    valueArr = [];
+
+    for (var j = 0; j < row.length; j++) {
+      if (keyColumns.indexOf(j) > -1) {
+        keyArr.push(row[j]);
+      }
+      else
+      {
+        valueArr.push(row[j]);
+      }    
+    }
+      
+      key = keyArr.join('');      
+      result[key] = valueArr;
+    
+  }
+
+  return result;
+
+}
+
+function TESTconvertArrayToObject() {
+     var arr2 =   [['a', 'cat',  1],
+                   ['b', 'dog',  1],
+                   ['c', 'bird', 1]];
+
+
+    var keyColumns =  [0, 2];
+    
+    var result = convertArrayToObject(arr2, keyColumns);
+    
+    Logger.log(result); // {a1=[cat], c1=[bird], b1=[dog]}
+    
+    
+
+}
+
+
