@@ -177,7 +177,7 @@ function TESTunpivot() {
 
 /* Extract Columns From Table Data
   
-  * Det data from simple table
+  * Get data from simple table
   
   data = []
  [[ 'Name'  ,'Age', 'Sal'],
@@ -233,6 +233,68 @@ function TESTextrectColumnsFromTableData() {
               */ 
 }
 
+/* Extract Columns by Ids: column numbers
+  
+  * Get data from simple table
+  
+  var data =    [[ 'Tom'   ,   18,   500],  
+                 [ 'Mike'  ,   25,    15],
+                 [ 'Max'   ,   30,  2000]];
+  
+  var columns = [0, 2] // zero-based
+   
+  
+  var result =   extrectColumnsByIds(data, columns);
+  
+  Logger.log(result);
+  
+  // only selected columns
+  //    | Tom   |  500|
+  //    | Mike  |   15|
+  //    | Max   | 2000| 
+  //
+*/
+function extrectColumnsByIds(data, columns) {
+  var result = [];
+  var row = [];
+  var newRow = [];
+  for (var i = 0; i < data.length; i++) {
+    row = [];
+    newRow = []; 
+    row = data[i];
+    newRow = row.filter(filterByCols(columns));
+    result.push(newRow);      
+  }
+  
+  function filterByCols(columns) {
+    return function filt(row, index) {
+      return columns.indexOf(index) > -1;    
+    }    
+  }
+  
+  return result;
+
+}
+
+function TESTextrectColumnsByIds() {
+  var data =    [[ 'Tom'   ,   18,   500],  
+                 [ 'Mike'  ,   25,    15],
+                 [ 'Max'   ,   30,  2000]];
+  
+  var columns = [0, 2] // zero-based
+   
+  
+  var result =   extrectColumnsByIds(data, columns);
+  
+  Logger.log(result); // [[Tom, 500.0], [Mike, 15.0], [Max, 2000.0]]
+  
+  // only selected columns
+  //    | Tom   |  500|
+  //    | Mike  |   15|
+  //    | Max   | 2000| 
+  //
+
+}
 
 
 
