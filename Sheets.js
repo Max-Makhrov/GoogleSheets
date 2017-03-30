@@ -54,8 +54,8 @@ function writeDataIntoSheet(file, sheet, data, rowStart, colStart) {
   // get dimansions and get range
   rowStart = rowStart || 1;
   colStart = colStart || 1;   
-  var numRows = data.length + rowStart - 1;
-  var numCols = data[0].length + colStart - 1; 
+  var numRows = data.length;
+  var numCols = data[0].length; 
   var range = sheet.getRange(rowStart, colStart, numRows, numCols);
   
   // clear old data if rowStart or colStart are not defined
