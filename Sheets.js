@@ -37,22 +37,35 @@
   If strSheet doesn't exist → creates new sheet
                                     
 */
-function writeDataIntoSheet(file, strSheet, data, rowStart, colStart) {
+function writeDataIntoSheet(file, sheet, data, rowStart, colStart) {
   file = file || SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = createSheetIfNotExists(file, strSheet);
   
-  var numRows = data.length;
-  var numCols = data[0].length;
+  // get sheet as object
+  switch(typeof sheet) {
+    case 'object':
+        break;
+    case 'string':
+        sheet = createSheetIfNotExists(file, sheet);
+        break;
+    default:
+        return 'sheet is invalid';
+  }
   
-  
+  // get dimansions and get range
   rowStart = rowStart || 1;
-  colStart = colStart || 1;
-  
+  colStart = colStart || 1;   
+  var numRows = data.length + rowStart - 1;
+  var numCols = data[0].length + colStart - 1; 
   var range = sheet.getRange(rowStart, colStart, numRows, numCols);
-    if(!rowStart && !colStart) { sheet.clearContents(); }
+  
+  // clear old data if rowStart or colStart are not defined
+  if(!rowStart && !colStart) { sheet.clearContents(); }
 
+  
+  // set values
   range.setValues(data);
   
+  // report success
   return 'Wtite data to sheet -- ok!';
 
 }
