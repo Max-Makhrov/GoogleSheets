@@ -178,6 +178,7 @@ function TESTunpivot() {
 /* Extract Columns From Table Data
   
   * Get data from simple table
+    extract some cols, reorder cols
   
   data = []
  [[ 'Name'  ,'Age', 'Sal'],
@@ -199,9 +200,17 @@ function extrectColumnsFromTableData(data, columns) {
   var indexs = [];    
   var head = data[0];
   
-  for (var i = 0; i < head.length; i++) {
-    if (columns.indexOf(head[i]) > -1) { indexs.push(i); }    
+  var index = -1;
+  for (var i = 0; i < columns.length; i++) {
+    index = head.indexOf(columns[i])
+    if ( index > - 1) { indexs.push(index); }
+  
   }
+  
+//  
+//  for (var i = 0; i < head.length; i++) {
+//    if (columns.indexOf(head[i]) > -1) { indexs.push(i); }    
+//  }
   
   if (indexs == []) { return []; }
   
@@ -225,12 +234,25 @@ function TESTextrectColumnsFromTableData() {
   
   var columns = ["Name", "Sal"];
   
+  // Test #1. some columns
   Logger.log(extrectColumnsFromTableData(data, columns)); 
               /*
                 [[Tom, 500.0], 
                  [Mike, 15.0], 
                  [Max, 2000.0]]  
               */ 
+              
+ 
+ // Test #2. Reorder columns  
+ var columns = ["Name", "Sal", 'Age'];
+ Logger.log(extrectColumnsFromTableData(data, columns)); 
+           /*   
+                [[Tom, 500.0, 18.0], 
+                 [Mike, 15.0, 25.0], 
+                 [Max, 2000.0, 30.0]]
+           
+           */ 
+              
 }
 
 /* Extract Columns by Ids: column numbers
