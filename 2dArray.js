@@ -120,7 +120,12 @@ function get1DArray(arr){
 */
 function unpivot(head1, data1, head2, data2, labels) {
   var result = [];
-  var headers = head1[0].concat(labels);
+  var labels0 = head1[0];
+  var headers = [];
+  if (labels0) 
+  {
+    headers = head1[0].concat(labels);
+  }
   result.push(headers);
   
   // fill head2
