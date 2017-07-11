@@ -323,7 +323,82 @@ function TESTextrectColumnsByIds() {
 
 }
 
+/* Extract Columns by Ids: column numbers
+  
+  * Get data from simple table
+  
+  var data =    [[ 'Tom'   ,   18,   500],  
+                 [ 'Mike'  ,   25,    15],
+                 [ 'Max'   ,   30,  2000]];
+  
+  var columns = [0, -1, -1, 2] // zero-based
+   
+  
+  var result =   extrectColumnsByIds(data, columns);
+  
+  Logger.log(result);
+  
+  // only selected columns
+  // + fill -1 indexes with empty columns
+  //    | Tom   | | |  500|
+  //    | Mike  | | |   15|
+  //    | Max   | | | 2000| 
+  //
+*/
+function extrectColumnsByIdsFill(data, columns) {
+  var result = [];
+  var row = [];
+  var newRow = [];
+  var dataRow = [];
+  for (var i = 0; i < data.length; i++) {
+    row = [];
+    newRow = []; 
+    row = data[i];
+    newRow = [];
+    dataRow = data[i];
+    for (var y = 0, k = columns.length; y < k; y++)
+    {
+      var index = columns[y];
+      if (index == -1)
+      {
+        newRow.push('');
+      }
+      else
+      {
+        newRow.push(dataRow[index]);
+      }
+        
+    }    
+    
+    result.push(newRow);  
+    dataRow = [];
+  }
+  
 
+  
+  return result;
+
+}
+
+function TESTextrectColumnsByIdsFill() {
+  var data =    [[ 'Tom'   ,   18,   500],  
+                 [ 'Mike'  ,   25,    15],
+                 [ 'Max'   ,   30,  2000]];
+  
+  var columns = [0, -1, -1, 2] // zero-based
+   
+  
+  var result =   extrectColumnsByIdsFill(data, columns);
+  
+  Logger.log(result); // [[Tom, 500.0], [Mike, 15.0], [Max, 2000.0]]
+  
+  // only selected columns
+  //    | Tom   | | |  500|
+  //    | Mike  | | |   15|
+  //    | Max   | | | 2000| 
+  //
+
+}
 
 
 /*
