@@ -1,6 +1,6 @@
 /*
 
-  use code from:
+  to run this use code from:
   https://github.com/Max-Makhrov/GoogleSheets/blob/master/2dArray.js
   https://github.com/Max-Makhrov/GoogleSheets/blob/master/Sheets.js
 */
