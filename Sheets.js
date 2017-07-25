@@ -186,6 +186,29 @@ function getSheetsInfo_(fileId) {
 }
 
 
+/*
+  returns sheet {} by given fileId, sheetId
+*/
+function test_getSheetById()
+{
+ var fileId = '1wTEo0fat1y5dh_JwGHqaVCPNSjaodD6OrVdbglM8WD8'; 
+ var sheetId = 0;
+  Logger.log(getSheetById(fileId, sheetId).getName());
+  
+}
+function getSheetById(fileId, sheetId)
+{
+  var file = SpreadsheetApp.openById(fileId);
+  var sheets = file.getSheets();
+  
+  for(var i = 0, l = sheets.length; i < l; i++)
+  {
+   if (sheets[i].getSheetId() == sheetId) return sheets[i]; 
+  }
+  
+  return false;
+  
+}
 
 
 
