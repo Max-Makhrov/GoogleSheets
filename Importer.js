@@ -683,6 +683,7 @@ function merge2dArrays(arrFrom, arrTo, numIdColTo, fieldTypes, columns)
        }
       else
       {
+        rowResult.push('');
         // Logger.log('FieldId ' + fieldTypes[numCol] + ' = ' + fieldType);
       }
     }
