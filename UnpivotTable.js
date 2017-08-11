@@ -93,6 +93,10 @@ function unpivotTable(file, strHead1, strHead2Start, strLabels) {
   // head2 + data2
   var rHead2Start = file.getRange(strHead2Start)
   var lastColumn = sheet.getLastColumn();
+  if (rHead2Start.getWidth() > 1)
+  {
+    lastColumn = rHead2Start.getLastColumn();   
+  }
   var column2 = rHead2Start.getColumn();
   var numColumns2 = lastColumn - column2 + 1;
   var numRows2 = rHead2Start.getHeight();
