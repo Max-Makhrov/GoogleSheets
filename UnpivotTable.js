@@ -133,3 +133,63 @@ function TESTunpivotTable() {
     Logger.log(result);
 
 }
+
+
+
+
+/**
+  * Convert wide table into normal view.
+  * 
+  * @param {range} sheet Name of sheet.
+  * @param {range} header1 Range name of header1: left part of the table.
+  * @param {range} header2 Range name of header2: right part of the rable.
+  * @param {array} labels Comma sepatated list: labels of right part of the table including metrics.
+  * @return The unpivoted table.
+  * @customfunction
+*/
+function getUnpivot(sheet, header1, header2, labels) {
+  // file
+  var file = SpreadsheetApp.getActiveSpreadsheet();
+  
+  // head1 + data1
+  var s = file.getSheetByName(sheet);
+  var rHead1 = s.getRange(header1);
+  var lastRow = s.getLastRow();
+  var numColumns1 = rHead1.getWidth();
+  var column1 = rHead1.getColumn();
+  var row = rHead1.getRow() + 1;
+  var numRows = lastRow - row + 1;
+  var rData1 = s.getRange(row, column1, numRows, numColumns1);
+  var head1 = rHead1.getValues();
+  var data1 = rData1.getValues();
+  
+  // head2 + data2
+  var rHead2Start = s.getRange(header2)
+  var lastColumn = s.getLastColumn();
+  if (rHead2Start.getWidth() > 1)
+  {
+    lastColumn = rHead2Start.getLastColumn();   
+  }
+  var column2 = rHead2Start.getColumn();
+  var numColumns2 = lastColumn - column2 + 1;
+  var numRows2 = rHead2Start.getHeight();
+  var row2 = rHead2Start.getRow();
+  var rHead2 = s.getRange(row2, column2, numRows2, numColumns2);
+  var rData2 = s.getRange(row, column2, numRows, numColumns2);
+  var head2 = rHead2.getDisplayValues();
+  var data2 = rData2.getDisplayValues();
+
+  // labels
+  var lls = [];  
+  if (!labels) {
+    for (var i = 0; i <= numRows2; i++) { lls[i] = 'Label' + i; }
+  }
+  else {
+    lls = labels.split(',');
+  }
+  
+  // result
+  var result = unpivot(head1, data1, head2, data2, lls);  
+  return result;
+
+}
