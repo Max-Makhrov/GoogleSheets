@@ -103,8 +103,8 @@ function unpivotTable(file, strHead1, strHead2Start, strLabels) {
   var row2 = rHead2Start.getRow();
   var rHead2 = sheet.getRange(row2, column2, numRows2, numColumns2);
   var rData2 = sheet.getRange(row, column2, numRows, numColumns2);
-  var head2 = rHead2.getValues();
-  var data2 = rData2.getValues();
+  var head2 = rHead2.getDisplayValues();
+  var data2 = rData2.getDisplayValues();
 
   // labels
   var labels = [];  
