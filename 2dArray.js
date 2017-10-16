@@ -796,3 +796,17 @@ function TESTconvertArrayToObject() {
 }
 
 
+function test_getLine()
+{
+  var array = [["el1", "el2"], ["el3", "el4"]];
+  Logger.log(getLine(array));
+}
+function getLine(array)
+{
+  var result = [];
+  for (var i = 0, l = array.length; i < l; i++)
+  {
+    result = result.concat(array[i]);
+  }
+  return result;
+}
