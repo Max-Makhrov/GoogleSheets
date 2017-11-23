@@ -1,3 +1,7 @@
+// this file uses code from:
+//    https://github.com/Max-Makhrov/GoogleSheets/blob/master/Array_Polyfills.js
+
+
 /*
 
   __  __             _             _       _       
@@ -808,5 +812,30 @@ function getLine(array)
   {
     result = result.concat(array[i]);
   }
+  return result;
+}
+
+
+
+function test_get2DArrayDifference()
+{
+  var ids = [100, 101, 102, 103];
+  var array = [['max', 103], ['lu', 104]];
+  var idIndex = 1; // number of column with id  
+  Logger.log(get2DArrayDifference(ids, array, idIndex)); // [[lu, 104.0]]
+  Logger.log(get2DArrayDifference(ids, [['max', 103]], idIndex)); // [[, ]]
+}
+function get2DArrayDifference(ids, array, idIndex)
+{
+  var result = [];
+  var row = [];
+  for (var i = 0, l = array.length; i < l; i++)
+  {
+    row = array[i];
+    if (ids.indexOf(row[idIndex]) == -1) { result.push(row); }  
+  }
+
+  if (result.length === 0) { result.push(row.fill('')); }
+
   return result;
 }
