@@ -405,6 +405,28 @@ function TESTextrectColumnsByIdsFill() {
 }
 
 
+function test_get2DArrayColumn()
+{
+  var array = [
+                ['mya', 1],
+                ['opa', 2]
+              ];
+  Logger.log(get2DArrayColumn(array, 1)); //  [1.0, 2.0]
+
+}
+
+
+function get2DArrayColumn(array, indx)
+{
+  var result = [];
+  for (var i = 0, l = array.length; i < l; i++)
+  {
+    result.push(array[i][indx]);    
+  }
+  return result;
+}
+
+
 /*
               _     _    _____      _                           
      /\      | |   | |  / ____|    | |                          
