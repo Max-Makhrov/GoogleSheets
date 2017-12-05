@@ -144,3 +144,28 @@ function TESTgetRandomArrayOfIntegers() {
   Logger.log(getRandomArrayOfIntegers(n, min, max));
 
 }
+
+
+function test_filterArraysByKeyArray()
+{
+  var key = [1, 0, 1];
+  var value = 1;
+  var arrays = [
+    ['M', 'not M', 'L'],
+    ['Star Wars', 'booo', 'Stat Trek']
+  ];
+
+  filterArraysByKeyArray(key, value, arrays);
+
+  Logger.log(arrays[0]);
+  Logger.log(arrays[1]);
+}
+function filterArraysByKeyArray(key, value, arrays)
+{
+  function check(elt, i) { return value === key[i]; }    
+  for (var i = 0, l = arrays.length; i < l; ++i)
+  { 
+    arrays[i] = arrays[i].filter(check); 
+  }
+  return 0;
+}
