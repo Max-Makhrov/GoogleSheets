@@ -9,6 +9,13 @@
                        |_|                                           |___/     
 */
 
+
+/*
+┌─┐┌─┐ ┬ ┬┌─┐┬  ┌─┐
+├┤ │─┼┐│ │├─┤│  └─┐
+└─┘└─┘└└─┘┴ ┴┴─┘└─┘
+*/
+
 function TESTarrayCompare() {
 
   var arr1 = [1, 2];
@@ -75,6 +82,92 @@ function get2ArraysEquals(arr1, arr2) {
     }
     //If everything passed, let's say YES
     return true;
+}
+
+
+
+/*
+┌─┐┬ ┬ ┌┬┐┌─┐┬─┐  ┌┐ ┬ ┬  ┬┌─┌─┐┬ ┬
+├┤ │ │  │ ├┤ ├┬┘  ├┴┐└┬┘  ├┴┐├┤ └┬┘
+└  ┴ ┴─┘┴ └─┘┴└─  └─┘ ┴   ┴ ┴└─┘ ┴ 
+*/
+
+function test_filterArraysByKeyArray()
+{
+  var key = [1, 0, 1];
+  var value = 1;
+  var arrays = [
+    ['M', 'not M', 'L'],
+    ['Star Wars', 'booo', 'Stat Trek']
+  ];
+
+  filterArraysByKeyArray(key, value, arrays);
+
+  Logger.log(arrays[0]);
+  Logger.log(arrays[1]);
+}
+function filterArraysByKeyArray(key, value, arrays)
+{
+  function check(elt, i) { return value === key[i]; }    
+  for (var i = 0, l = arrays.length; i < l; ++i)
+  { 
+    arrays[i] = arrays[i].filter(check); 
+  }
+  return 0;
+}
+
+
+/*
+┬ ┌┐┌┌┬┐┌─┐┬─┐┌─┐┌─┐┌─┐┌┬┐
+│ │││ │ ├┤ ├┬┘└─┐├┤ │   │ 
+┴ ┘└┘ ┴ └─┘┴└─└─┘└─┘└─┘ ┴ 
+*/
+
+// https://stackoverflow.com/a/1887494/5372400
+function test_intersection()
+{
+Logger.log(arrayIntersection( [1, 2, 3, "a"], [1, "a", 2], ["a", 1] )); // Gives [1, "a"]; 
+
+}
+var arrayContains = Array.prototype.indexOf ?
+    function(arr, val) {
+        return arr.indexOf(val) > -1;
+    } :
+    function(arr, val) {
+        var i = arr.length;
+        while (i--) {
+            if (arr[i] === val) {
+                return true;
+            }
+        }
+        return false;
+    };
+function arrayIntersection() {
+    var val, arrayCount, firstArray, i, j, intersection = [], missing;
+    var arrays = Array.prototype.slice.call(arguments); // Convert arguments into a real array
+
+    // Search for common values
+    firstArray = arrays.pop();
+    if (firstArray) {
+        j = firstArray.length;
+        arrayCount = arrays.length;
+        while (j--) {
+            val = firstArray[j];
+            missing = false;
+
+            // Check val is present in each remaining array 
+            i = arrayCount;
+            while (!missing && i--) {
+                if ( !arrayContains(arrays[i], val) ) {
+                    missing = true;
+                }
+            }
+            if (!missing) {
+                intersection.push(val);
+            }
+        }
+    }
+    return intersection;
 }
 
 
@@ -146,26 +239,5 @@ function TESTgetRandomArrayOfIntegers() {
 }
 
 
-function test_filterArraysByKeyArray()
-{
-  var key = [1, 0, 1];
-  var value = 1;
-  var arrays = [
-    ['M', 'not M', 'L'],
-    ['Star Wars', 'booo', 'Stat Trek']
-  ];
 
-  filterArraysByKeyArray(key, value, arrays);
 
-  Logger.log(arrays[0]);
-  Logger.log(arrays[1]);
-}
-function filterArraysByKeyArray(key, value, arrays)
-{
-  function check(elt, i) { return value === key[i]; }    
-  for (var i = 0, l = arrays.length; i < l; ++i)
-  { 
-    arrays[i] = arrays[i].filter(check); 
-  }
-  return 0;
-}
