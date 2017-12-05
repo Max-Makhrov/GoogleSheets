@@ -55,7 +55,7 @@ function ObjectOnEdit(e)
   {
    for (var i = numCol; i <= numCol + numCols - 1; i++)
    {
-    columns.push(i);      
+    columns.push(parseInt(i));      
    }
   }
   
