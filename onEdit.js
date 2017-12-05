@@ -1,4 +1,41 @@
 
+/**
+ * Test function for onEdit. Passes an event object to simulate an edit to
+ * a cell in a spreadsheet.
+ *
+ * Check for updates: https://stackoverflow.com/a/16089067/1677912
+ *
+ * See https://developers.google.com/apps-script/guides/triggers/events#google_sheets_events
+ */
+function getEditObject(a1Notation) {
+  var e = 
+  {
+    user : Session.getActiveUser().getEmail(),
+    source : SpreadsheetApp.getActiveSpreadsheet(),
+    range : SpreadsheetApp.getActiveSpreadsheet().getRange(a1Notation),
+    value : SpreadsheetApp.getActiveSpreadsheet().getRange(a1Notation).getValue(),
+    authMode : "LIMITED"
+  };
+  
+  return e;
+}
+
+
+function test_ObjectOnEdit()
+{
+  var obj = new ObjectOnEdit(getEditObject('A1'));
+  
+  Logger.log(obj.getValues());
+
+  obj = new ObjectOnEdit(getEditObject('A1:C15'));
+
+  Logger.log(obj.getValues());
+
+}
+
+
+
+
 function ObjectOnEdit(e)
 {
   var self = this;
@@ -32,16 +69,15 @@ function ObjectOnEdit(e)
   
   
   // get value or values
-  var value = e.value;
-  var values = [];
-  if (value == undefined) { value = ''; }
-  if (typeof value == 'object') { value = ''; }
-  if (boolCell && value == '') { value = r.getValue(); }
-  if (!boolCell && value == '') { values = r.getValues(); }
-  
-  self.value = value;
-  self.values = values;
-  
+  // value    [[value]];
+  // values   [[val1, val2]];
+  this.getValues = function()
+  {
+    if (!self.boolCell) { return r.getValues(); }     
+    var value = e.value;
+    if (value == undefined || typeof value == 'object') { value = r.getValue(); }
+    return [[value]];
+  }  
   
   // old value
   var oldValue = e.oldValue;
