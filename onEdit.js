@@ -66,7 +66,9 @@ function ObjectOnEdit(e)
   self.numCol = numCol;
   self.boolCell = boolCell;
   self.columns = columns;
-  
+     
+  self.getLastRow = r.getLastRow();
+  self.getLastCol = r.getLastColumn();
   
   // get value or values
   // value    [[value]];
