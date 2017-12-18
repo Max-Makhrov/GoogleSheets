@@ -240,4 +240,26 @@ function TESTgetRandomArrayOfIntegers() {
 
 
 
+function test_getFilled2DArray()
+{
+  var value = 'max';
+  Logger.log(getFilled2DArray(value, 3, 4));
+  // [[max, max, max], [max, max, max], [max, max, max], [max, max, max]]
+}
+function getFilled2DArray(value, w, h)
+{
+  var result = [];
+  var row = [];
+  for (var i = 0; i < h; i++)
+  {
+    row = [];
+    for (var ii = 0; ii < w; ii++) { row.push(value); }
+    result.push(row);
+  }
+  return result;
+
+}
+
+
+
 
