@@ -171,6 +171,54 @@ function TESTunpivot() {
 
 }
 
+
+
+function test_combine2DArrays()
+{
+  var arr1 = [[1,2,3,4]];
+  var arr2 = [[4,5,6,7],
+              [8,9,0,1]];              
+  var arr3 = [[1,2,3]];
+    
+  var arrays = [];  
+  arrays.push(arr1);
+  arrays.push(arr2);
+  arrays.push(arr3);
+  
+  Logger.log(combine2DArrays(arrays));
+  /*
+   [ 
+     [1.0, 2.0, 3.0, 4.0], 
+     [4.0, 5.0, 6.0, 7.0], 
+     [8.0, 9.0, 0.0, 1.0], 
+     [1.0, 2.0, 3.0, ]
+   ]  
+  */
+}
+// combine 2d arrays of different sizes
+function combine2DArrays(arrays)
+{
+  // detect max L
+  var l = 0;
+  var row = [];
+  var result = [];
+  var elt = '';
+  arrays.forEach(function(arr) { l = Math.max(l, arr[0].length); } );
+  arrays.forEach(function(arr) {
+    for (var i = 0, h = arr.length; i < h; i++)
+    {
+      var row = arr[i];
+      // fill with empty value
+      for (var ii = row.length; ii < l; ii++) { row.push(''); }
+      result.push(row);
+    }
+  }
+  );
+  
+  return result;
+
+}
+
 /*
 
    _____      _      _____      _                           
