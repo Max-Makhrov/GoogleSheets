@@ -60,33 +60,7 @@ function test_AlaSqlSelect()
         4.99,
         299.40000000000003                                            // error: precision =(
      ],
-     [  
-        Tue Jan 02 17:13:24      GMT+02:00      2018,
-        East,
-        Jones,
-        Binder,
-        60.0,
-        8.99,
-        539.4
-     ],
-     [  
-        Fri Dec 29 23:59:13      GMT+02:00      2017,
-        East,
-        Jones,
-        Pen,
-        64.0,
-        8.99,
-        575.36
-     ],
-     [  
-        Thu Dec 21 06:45:36      GMT+02:00      2017,
-        East,
-        Jones,
-        Pen Set,
-        62.0,
-        4.99,
-        309.38
-     ]
+    ...
   ]
   
   */
@@ -103,15 +77,12 @@ function getAlaSqlSelect_(data, sql)
 }
 
 
-
 function convertToAlaSql_(string)
 {
   var result = string.replace(/(Col)(\d+)/g, "[$2]");
   result = result.replace(/\[(\d+)\]/g, function(a,n){ return "["+ (+n-1) +"]"; });
   return result;
 }
-
-
 
 
 function convertAlaSqlResultToArray_(res)
@@ -129,4 +100,3 @@ function convertAlaSqlResultToArray_(res)
   );
   return result;
 }
-
