@@ -1,4 +1,4 @@
-var C_SOURCE_TRIGGER = 'SPREADSHEETS';
+var C_SOURCE_TRIGGER = 'SPREADSHEETS'; // the source of triger we create: for check if trigger is there
 
 /*
 --------------------------------------------------------------------
