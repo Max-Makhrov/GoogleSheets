@@ -6,6 +6,9 @@ var ssets = {
     tagsrow: 1,
     datarow: 2,
     func: data2jsonarray_
+  },
+  boom: {
+    func: data2jsonarray_
   }
 }
 
@@ -19,7 +22,7 @@ function getSets() {
       // get node
       node = ssets[k];
       // get sheet + range
-      sheetname = node.sheet;
+      sheetname = node.sheet || k;
       sheet = file.getSheetByName(sheetname);
       range = sheet.getDataRange();
       // get data
@@ -49,3 +52,7 @@ function data2jsonarray_(node) {
   }
   return res;
 }
+
+// see also: 
+//  * sheet to JSON: 
+//    https://gist.github.com/pamelafox/1878143
