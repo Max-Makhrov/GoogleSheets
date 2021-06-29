@@ -23,7 +23,7 @@ function readOnEditSets() {
     putCache_(key, JSON.stringify(res));
   }
 
-  console.log(new Date() - t);
+  console.log('time to read sets = ' + (new Date() - t));
   // console.log(JSON.stringify(res));
   return res;
  
