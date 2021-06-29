@@ -35,7 +35,7 @@ function getSets() {
       res[k] = node.func(node);
     }
   }
-  console.log(res);
+  console.log(JSON.stringify(res, null, 4));
   return res;
 }
 
