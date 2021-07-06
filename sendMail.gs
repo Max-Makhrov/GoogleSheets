@@ -1,9 +1,3 @@
-function sendMail() {
-  var tasks = getSets().tasks;
-  tasks.forEach(sendMail_);
-}
-
-
 // function test_sendMail() {
 //   var set = {
 //     do: true,
