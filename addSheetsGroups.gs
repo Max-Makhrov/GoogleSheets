@@ -44,13 +44,16 @@ function docollapse_(set) {
   var data = range0.getValues();
   // console.log(data)
   range0.shiftRowGroupDepth(maxDepth * -1);
+  sheet.showRows(set.row, h);
 
   //
   // loops
   var val0='', val, groupVal, groupVal0 = '';
+  var rowVals, hh = h;
   // loop to fill data
   for (c = (l-2); c>=0; c--) {
-    for (var r = 0; r < h; r++) { 
+    for (var r = 0; r < h; r++) {
+      rowVals = data[r].join(''); 
       groupVal = data[r][c];
       if (groupVal === '') { groupVal = groupVal0; }
       val = data[r][c+1];
@@ -59,6 +62,9 @@ function docollapse_(set) {
         data[r][c] = groupVal0;
       }
       groupVal0 = groupVal;
+      if (rowVals === '' && h > r) {
+        hh = r;
+      }
     }
     val = '',
     groupVal0 = '', groupVal = '';
@@ -67,7 +73,7 @@ function docollapse_(set) {
   // loop columns first
   var start = 0, fin = 0;
   for (c = (l-2); c>=0; c--) {
-    for (var r = 0; r < h; r++) { 
+    for (var r = 0; r < hh; r++) {
       groupVal = data[r][c];
       if (groupVal === '') { groupVal = groupVal0; }
       val = data[r][c+1];
@@ -86,18 +92,17 @@ function docollapse_(set) {
         // For debug purpose only. 
         // Name of group
         console.log(groupVal0);
-        if (fin > start) {
+        if (fin >= start) {
           sheet.getRange(start + ':' + fin)
             .shiftRowGroupDepth(1);
         }
-      }
-      if (r === (h-1)) {
+      } else if (r === (h-1)) {
         fin = r + set.row;
         console.log(fin);
         // For debug purpose only. 
         // Name of group
         console.log(groupVal);
-        if (fin > start) {
+        if (fin >= start) {
           sheet.getRange(start + ':' + fin)
             .shiftRowGroupDepth(1);
         }
@@ -110,6 +115,9 @@ function docollapse_(set) {
   }
   // console.log(data);
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------
 
 
 /// Sets
