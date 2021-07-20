@@ -71,9 +71,7 @@ function data2jsonarray_(node) {
 }
 
 
-function getCache_() {
-  return CacheService.getDocumentCache();
-}
+
 function putCache_(key, val) {
   var c = getCache_();
   c.put(key, val, 21600); // max cache life
@@ -81,4 +79,7 @@ function putCache_(key, val) {
 function readCache_(key) {
   var c = getCache_();
   return c.get(key);
+}
+function getCache_() {
+  return CacheService.getDocumentCache();
 }
