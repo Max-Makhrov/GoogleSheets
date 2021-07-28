@@ -14,7 +14,12 @@ var ssets = {
 
 function getSets() {
   var fileid = ssets.file;
-  var file = SpreadsheetApp.openById(fileid);
+  var file;
+  if (fileid) {
+    file = SpreadsheetApp.openById(fileid);
+  } else {
+    file = SpreadsheetApp.getActive();
+  }
   var sheetname, sheet, range;
   var node, data, res = {};
   for (var k in ssets) {
