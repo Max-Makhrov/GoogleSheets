@@ -12,8 +12,9 @@ var ssets = {
   }
 }
 
-function getSets() {
-  var fileid = ssets.file;
+function getSets(setsObj) {
+  var ini_sets = setsObj || ssets;
+  var fileid = ini_sets.file;
   var file;
   if (fileid) {
     file = SpreadsheetApp.openById(fileid);
@@ -22,10 +23,10 @@ function getSets() {
   }
   var sheetname, sheet, range;
   var node, data, res = {};
-  for (var k in ssets) {
+  for (var k in ini_sets) {
     if (k !== 'file') {
       // get node
-      node = ssets[k];
+      node = ini_sets[k];
       // get sheet + range
       sheetname = node.sheet || k;
       sheet = file.getSheetByName(sheetname);
