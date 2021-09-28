@@ -47,6 +47,7 @@ function actWorkSheets_(func) {
     sheet = sheets[i];
     sheetName = sheet.getName();
     if (getSheetMatchs_(sheetName)) {
+      sheet.activate();
       func(sheet, sheetName);
     }
   }
