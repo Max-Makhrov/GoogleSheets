@@ -52,7 +52,9 @@ function data2jsonarray_(node) {
   for (var i = node.datarow - 1; i < node.data.length; i++) {
     chunk = {};
     for (var ii = 0; ii < tags.length; ii++) {
-      chunk[tags[ii]] = node.data[i][ii];
+      if (tags[ii] !== '') {
+        chunk[tags[ii]] = node.data[i][ii];
+      } 
     }
     res.push(chunk);
   }
