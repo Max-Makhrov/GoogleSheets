@@ -48,15 +48,22 @@ function getSets(setsObj) {
 function data2jsonarray_(node) {
   var tags = node.data[node.tagsrow -1]; 
   // loop rows
-  var res = [], chunk = {};
+  var res = [], chunk = {}, num_vals, val;
   for (var i = node.datarow - 1; i < node.data.length; i++) {
     chunk = {};
+    num_vals = 0;
     for (var ii = 0; ii < tags.length; ii++) {
       if (tags[ii] !== '') {
-        chunk[tags[ii]] = node.data[i][ii];
+        val = node.data[i][ii];
+        chunk[tags[ii]] = val;
+        if (val !== '') { num_vals++; }
       } 
     }
-    res.push(chunk);
+    if (num_vals > 0) {
+      res.push(chunk);
+      console.log(num_vals)
+    }
+    
   }
   return res;
 }
