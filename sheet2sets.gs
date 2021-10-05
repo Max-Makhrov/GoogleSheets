@@ -61,7 +61,6 @@ function data2jsonarray_(node) {
     }
     if (num_vals > 0) {
       res.push(chunk);
-      console.log(num_vals)
     }
     
   }
