@@ -41,6 +41,7 @@ function runTest_delayedTasks_(key, task) {
  *  
  */   
 function test1_delayedTasks() {
+  var t = new Date();
   save_delayedTasks_("Do some tasks", "hey", {});
   save_delayedTasks_("Do some tasks", "foo", {});
   save_delayedTasks_("Do some tasks", "baz", {});
@@ -59,9 +60,8 @@ function test2_delayedTasks() {
  * do the first task
  */
 function test3_delayedTasks() {
-  runFirst_delayedTasks_("Do some tasks")
-}
 
+}
 
 
 
@@ -96,7 +96,9 @@ function runAll_delayedTasks_(cache_key) {
     var d = task.dateAdded___;
     if (d) {
       if (d > t) {
-        newTasks[key] = task;
+        newTasks[key] = {
+          dateAdded___: new Date()
+        }
       }
     }
   }
@@ -104,49 +106,9 @@ function runAll_delayedTasks_(cache_key) {
   save_delayedTasks_memory_(cache_key, newTasks);
   tasks = get_delayedTasks_(cache_key);
   console.log(f + ' - undone tasks - ' + JSON.stringify(tasks, null, 4));
-
+  
   console.log(f + ' - time = ' + (new Date() - t));
-}  
-
-function runFirst_delayedTasks_(cache_key) {
-  var f = 'runFirst_delayedTasks_';
-  var t = new Date();
-  // var cache_key = "Do some tasks";
-  var tasks = get_delayedTasks_(cache_key);
-  console.log(f + ' - todo tasks - ' + JSON.stringify(tasks, null, 4));
-  var config = get_delayedTasks_Config_();
-  var func = config[cache_key].func;
-  var keys = Object.keys(tasks);
-  var key0 = keys[0];
-  if (key0) {
-    GoogleAppsScrip[func](key0, tasks[key0]);
-    console.log(f + ' - task - ' + key0 + ' ✔️');
-    // check if new tasks were there!
-    var tasks = get_delayedTasks_(cache_key);
-    var task = {};
-    var newTasks = {};
-    for (key in tasks) {
-      // dateAdded___
-      task = tasks[key];
-      if (key !== key0) {
-        newTasks[key] = task;
-      } else {
-        var d = task.dateAdded___;
-        if (d) {
-          if (d > t) {
-            newTasks[key] = task;
-          }
-        }
-      }
-    }
-    // clear tasks if no new were added!
-    save_delayedTasks_memory_(cache_key, newTasks);
-    tasks = get_delayedTasks_(cache_key);
-    console.log(f + ' - undone tasks - ' + JSON.stringify(tasks, null, 4));
-  }
-
-  console.log(f + ' - time = ' + (new Date() - t));
-} 
+}              
 
 
 
@@ -201,29 +163,6 @@ function save_delayedTasks_(cache_key, task_key, task) {
   task.dateAdded___ = new Date();
   tasks[task_key] = task;
   save_delayedTasks_memory_(cache_key, tasks)
-}
-/**
- * delete all or selected tasks
- * 
- * @cache_key {string}
- * @task_key  {string}
- * @task      {object}
- */
-function delete_delayedTasks_(cache_key, task_key) {
-  if (!task_key) {
-    // delete all tasks
-    save_delayedTasks_memory_(cache_key, {});
-    return 0;
-  }
-  var tasks = get_delayedTasks_(cache_key);
-  var newTasks = {};
-  for (var key in tasks) {
-    if (key !== task_key) {
-      newTasks[key] = tasks[key];
-    }
-  }
-  save_delayedTasks_memory_(cache_key, newTasks);
-  return 0;
 }
 /**
  * save tasks 2 memory
