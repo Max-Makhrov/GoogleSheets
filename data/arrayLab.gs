@@ -120,28 +120,32 @@ function scale_2d_width_(arr, width) {
  * 
  * @retuen {array} of numbers or empty
  */
-// function test_1d_missingnumbers() {
-//   var arr = [2, 1, '', 5, 7, ''];
-//   var res = get_1d_missingnumbers_(arr);
+// function test_1d_missingintegers() {
+//   var arr = [2, 1, '', '5', 7, ''];
+//   var res = get_1d_missingintegers_(arr);
 //   console.log(res); // [ 3, 4, 6 ]
 // }
-function get_1d_missingnumbers_(arr) {
-  var min, max;
+function get_1d_missingintegers_(arr) {
+  var min, max, val;
+  var arr_check = [];
   for (var i = 0; i < arr.length; i++) {
+    val = arr[i];
     if (arr[i] !== '') {
-      min = min || arr[i];
-      max = max || arr[i];
-      if (arr[i] > max) {
-        max = arr[i];
+      val = parseInt(arr[i]);
+      min = min || val;
+      max = max || val;
+      if (val > max) {
+        max = val;
       }
-      if (arr[i] < min) {
-        min = arr[i];
+      if (val < min) {
+        min = val;
       }
     }
+    arr_check.push(val);
   }
   var res = [];
   for (var k = min; k <= max; k++) {
-    if (arr.indexOf(k) === -1) {
+    if (arr_check.indexOf(k) === -1) {
       res.push(k);
     }
   }
