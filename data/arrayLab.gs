@@ -127,7 +127,7 @@ function scale_2d_width_(arr, width) {
 // }
 function get_1d_missingintegers_(arr) {
   var min, max, val;
-  var arr_check = [];
+  var obj_check = {};
   for (var i = 0; i < arr.length; i++) {
     val = arr[i];
     if (arr[i] !== '') {
@@ -141,11 +141,11 @@ function get_1d_missingintegers_(arr) {
         min = val;
       }
     }
-    arr_check.push(val);
+    obj_check[val] = true;
   }
   var res = [];
   for (var k = min; k <= max; k++) {
-    if (arr_check.indexOf(k) === -1) {
+    if (!obj_check[k]) {
       res.push(k);
     }
   }
