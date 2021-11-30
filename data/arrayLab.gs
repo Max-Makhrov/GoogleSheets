@@ -1,4 +1,45 @@
 /**
+ * return new array of values
+ * up to the last not-empty row
+ * 
+ * returns first row only 
+ * if all rows are empty
+ * 
+ * @arr2d {array} of arrays
+ * 
+ * @return {array} of arrays
+ */
+// function test_trim_2d_down() {
+//   var arr = [['ddd'], ['']];
+//   var res = trim_2d_down_(arr);
+//   console.log(res);
+// }
+function trim_2d_down_(arr2d) {
+  var last = 0, row = [];
+  var i = arr2d.length-1;
+  var isRowEmpty_ = function(row) {
+    var e = true;
+    for (var i = 0; i < row.length; i++) {
+      if (row[i] !== '') {
+        e = false;
+      }
+    }
+    return e;
+  }
+  while (i >= 0 && last === 0) {
+    row = arr2d[i];
+    if (!isRowEmpty_(row)) {
+      last = i;
+    }
+    i--;
+  } 
+  var res = arr2d.slice(0, last+1);
+  return res;
+}
+
+
+
+/**
  * converts 2d array to 1 d
  * direction: 
  * rows → columns
