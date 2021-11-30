@@ -109,3 +109,43 @@ function scale_2d_width_(arr, width) {
   }
   return res;
 }
+
+
+
+/**
+ * get missing numbers in array of numbers 
+ * 
+ * 
+ * @arr {array} of numbers or blank cells
+ * 
+ * @retuen {array} of numbers or empty
+ */
+// function test_1d_missingnumbers() {
+//   var arr = [2, 1, '', 5, 7, ''];
+//   var res = get_1d_missingnumbers_(arr);
+//   console.log(res); // [ 3, 4, 6 ]
+// }
+function get_1d_missingnumbers_(arr) {
+  var min, max;
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] !== '') {
+      min = min || arr[i];
+      max = max || arr[i];
+      if (arr[i] > max) {
+        max = arr[i];
+      }
+      if (arr[i] < min) {
+        min = arr[i];
+      }
+    }
+  }
+  var res = [];
+  for (var k = min; k <= max; k++) {
+    if (arr.indexOf(k) === -1) {
+      res.push(k);
+    }
+  }
+  // console.log(min);
+  // console.log(max);
+  return res;
+}
