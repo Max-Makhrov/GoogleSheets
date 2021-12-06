@@ -1,20 +1,15 @@
 /**
- * return new array of values
- * up to the last not-empty row
- * 
- * returns first row only 
- * if all rows are empty
  * 
  * @arr2d {array} of arrays
  * 
- * @return {array} of arrays
+ * @return {int} last not-empty row
  */
-// function test_trim_2d_down() {
-//   var arr = [['ddd'], ['']];
-//   var res = trim_2d_down_(arr);
+// function test_get_2d_last() {
+//   var arr = [['ddd'], ['ddd'], ['']];
+//   var res = get_2d_last_(arr);
 //   console.log(res);
 // }
-function trim_2d_down_(arr2d) {
+function get_2d_last_(arr2d) {
   var last = 0, row = [];
   var i = arr2d.length-1;
   var isRowEmpty_ = function(row) {
@@ -32,8 +27,31 @@ function trim_2d_down_(arr2d) {
       last = i;
     }
     i--;
-  } 
-  var res = arr2d.slice(0, last+1);
+  }
+  return last+1;
+}
+
+
+
+/**
+ * return new array of values
+ * up to the last not-empty row
+ * 
+ * returns first row only 
+ * if all rows are empty
+ * 
+ * @arr2d {array} of arrays
+ * 
+ * @return {array} of arrays
+ */
+// function test_trim_2d_down() {
+//   var arr = [['ddd'], ['']];
+//   var res = trim_2d_down_(arr);
+//   console.log(res);
+// }
+function trim_2d_down_(arr2d) {
+  var last = get_2d_last_(arr2d);
+  var res = arr2d.slice(0, last);
   return res;
 }
 
