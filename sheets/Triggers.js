@@ -87,3 +87,43 @@ function deleteTriggerOnHour_(functionName)
   }  
   return -1; // trigger is not founf  
 }
+
+
+/**
+ * function to create a trigger of selected type
+ * 
+ * ss    - Spreadsheet id
+ * name  - Trigger Function Name
+ * type  - Type of trigger
+ * 
+ * Supported types:
+ *       1. edit
+ *       2. open
+ */
+function setSpreadsheetTrigger_(id, name, type) {
+
+  console.log('trigger ' + name +
+     ' for new file' +
+     id);
+
+  var trigger;
+  if (type === 'edit') {
+    trigger = ScriptApp
+      .newTrigger(name)
+      .forSpreadsheet(id)
+      .onEdit()
+      .create();  
+  }
+  if (type === 'open') {
+    trigger = ScriptApp
+      .newTrigger(name)
+      .forSpreadsheet(id)
+      .onOpen()
+      .create();
+  } else {
+    return -1;
+  }
+
+  return trigger.getUniqueId();
+
+}
