@@ -197,6 +197,9 @@ function get_1d_missingintegers_(arr) {
 //   //   { start: 500, end: 501, count: 2 } ]
 // }
 function groupNumbers_(array) {
+  if (array.length === 0) {
+    return [];
+  }
   var i = 0;
   var node = {
     start: array[i], 
