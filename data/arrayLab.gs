@@ -171,3 +171,51 @@ function get_1d_missingintegers_(arr) {
   // console.log(max);
   return res;
 }
+
+
+/**
+ * convert array of sorted numbers
+ * to object of groups of numbers
+ * 
+ * [1,2,3,  4,5,   8,9] →
+ * [
+ *   {start: 1, end: 5, count: 5},
+ *   {start: 8, end: 9, count: 2},
+ * ]
+ * 
+ * 
+ * @arr {array} of sorted numbers
+ * 
+ * @retuen {array} of objects with desired ranges
+ */
+// function test_groupNumbers() {
+//   var array = [1,2,3,4,5,   8,9, 500, 501];
+//   var res = groupNumbers_(array);
+//   console.log(res);
+//   // [ { start: 1, end: 5, count: 5 },
+//   //   { start: 8, end: 9, count: 2 },
+//   //   { start: 500, end: 501, count: 2 } ]
+// }
+function groupNumbers_(array) {
+  var i = 0;
+  var node = {
+    start: array[i], 
+    end: array[i],
+    count: 1
+  }
+  var res = [node];
+  for (i = 1; i < array.length; i++) {
+    if (array[i-1]+1 === array[i]) {
+      node.end++;
+      node.count++;
+    } else {
+      node = {
+        start: array[i], 
+        end: array[i],
+        count: 1
+      }
+      res.push(node);
+    }
+  }
+  return res;
+}
