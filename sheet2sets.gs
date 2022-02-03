@@ -45,9 +45,9 @@ function getSets(setsObj) {
 /**
  * converts data to object with keys
  * 
- * param {array} textsets.data 
- * param {number} textsets.tagsrow   row number with tag names
- * param {number} textsets.datarow   row number data starts 
+ * param {array} sets.data 
+ * param {number} sets.tagsrow   row number with tag names
+ * param {number} sets.datarow   row number data starts 
  * 
  */
 function data2jsonarray_(sets) {
