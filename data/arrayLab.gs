@@ -34,6 +34,104 @@ function get_2d_last_(arr2d) {
 
 
 /**
+ * convert data to object with keys
+ * 
+ * param {array} sets.data 
+ * param {number} sets.tagsrow   row number with tag names
+ * param {number} sets.datarow   row number data starts 
+ * 
+ */
+function data2jsonarray_(sets) {
+  var tagsrow = sets.tagsrow || 1;
+  var datarow = sets.datarow || 2;
+  var tags = sets.data[tagsrow -1]; 
+  // loop rows
+  var res = [], chunk = {}, num_vals, val;
+  for (var i = datarow - 1; i < sets.data.length; i++) {
+    chunk = {};
+    num_vals = 0;
+    for (var ii = 0; ii < tags.length; ii++) {
+      if (tags[ii] !== '') {
+        val = sets.data[i][ii];
+        chunk[tags[ii]] = val;
+        if (val !== '') { num_vals++; }
+      } 
+    }
+    if (num_vals > 0) {
+      res.push(chunk);
+    } 
+  }
+  return res;
+}
+
+
+
+/**
+ * convert data to arrays of json grouped by key
+ * 
+ * param {array} sets.data 
+ * param {number} sets.tagsrow   row number with tag names
+ * param {number} sets.datarow   row number data starts 
+ * param {string} sets.key       key column to group by
+ * 
+ */
+// function test_data2jsongroups() {
+//   var data = [
+//     ['name', 'date', 'sum'],
+//     ['foo',   202101, 500],
+//     ['foo',   202102, 500],
+//     ['abcd',   202101, 50],
+//     ['abcd',   202102, 50],
+//     ['abcd',   202103, 100],
+//   ];
+
+//   var res = data2jsongroups_({
+//     data: data,
+//     key: 'name'
+//   });
+
+//   console.log(res);
+//   // { foo: 
+//   //    [ { date: 202101, sum: 500 }, 
+//   //      { date: 202102, sum: 500 } ],
+//   //   abcd: 
+//   //    [ { date: 202101, sum: 50 },
+//   //      { date: 202102, sum: 50 },
+//   //      { date: 202103, sum: 100 } ] }
+// }
+function data2jsongroups_(sets) {
+  var tagsrow = sets.tagsrow || 1;
+  var datarow = sets.datarow || 2;
+  var tags = sets.data[tagsrow -1]; 
+  var key = sets.key;
+
+  // loop rows
+  var res = {}, chunk = {}, num_vals, val, k;
+  for (var i = datarow - 1; i < sets.data.length; i++) {
+    chunk = {};
+    num_vals = 0;
+    for (var ii = 0; ii < tags.length; ii++) {
+      if (tags[ii] !== '' && tags[ii] !== key) {
+        val = sets.data[i][ii];
+        chunk[tags[ii]] = val;
+        if (val !== '') { num_vals++; }
+      } else if (tags[ii] !== '' && tags[ii] === key) {
+        k = sets.data[i][ii];
+      }
+    }
+    if (num_vals > 0) {
+      if (!(k in res)) {
+        res[k] = [chunk];
+      } else {
+        res[k].push(chunk);
+      }
+    } 
+  }
+  return res;
+}
+
+
+/**
  * return new array of values
  * up to the last not-empty row
  * 
