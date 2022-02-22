@@ -92,7 +92,7 @@ function data2jsonarray_(options) {
 }     
 
 /**
- * convert data to arrays of json grouped by key
+ * converts data to arrays of json grouped by key
  * 
  * param {array} options.data 
  * param {array} options.header
@@ -130,7 +130,7 @@ function data2jsongroups_(options) {
 }
 
 /**
- * convert data json object of key-value pairs
+ * converts data to key-value pairs
  * 
  * param {array} options.data 
  * param {array} options.header
