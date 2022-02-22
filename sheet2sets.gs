@@ -1,31 +1,6 @@
 // Settings from sheets
 // test:
 // https://script.google.com/u/0/home/projects/1GhlbHQx1ke_enwGc5G7kfVXio_5XMmfyNWMuOfWKi9vJioYzJlETMwMk/edit
-var ssets = {
-  file: '1UTMsO5zeIgnqPndvRrm6kpTXNJ9MM2YrZkazOLEr2wY',
-  tasks: {
-    sheet: 'esets',
-    tagsrow: 1,
-    datarow: 2,
-    func: data2jsonarray_
-  },
-  boom: {
-    func: data2jsonarray_
-  }
-}
-
-function getSets(setsObj) {
-  var ini_sets = setsObj || ssets;
-  var fileid = ini_sets.file;
-  var file;
-  if (fileid) {
-    file = SpreadsheetApp.openById(fileid);
-  } else {
-    file = SpreadsheetApp.getActive();
-  }
-  var sheetname, sheet, range;
-  var sets, data, res = {};
-// Settings from sheets
 var default_sheet2script_options = {
   file: '1KKJLYfcXsZfI0DXLyobiLVMz-vnMRO_R6or73ENeZKw',
   data: {
@@ -92,7 +67,7 @@ function data2jsonarray_(options) {
 }     
 
 /**
- * converts data to arrays of json grouped by key
+ * convert data to arrays of json grouped by key
  * 
  * param {array} options.data 
  * param {array} options.header
