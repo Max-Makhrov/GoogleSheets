@@ -1,4 +1,6 @@
 // Settings from sheets
+// test:
+// https://script.google.com/u/0/home/projects/1GhlbHQx1ke_enwGc5G7kfVXio_5XMmfyNWMuOfWKi9vJioYzJlETMwMk/edit
 var ssets = {
   file: '1UTMsO5zeIgnqPndvRrm6kpTXNJ9MM2YrZkazOLEr2wY',
   tasks: {
