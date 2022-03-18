@@ -149,7 +149,12 @@ function data2keyvalues_(options) {
  */
 function getSetsFromSheets_(options) {
   var ini_sets = options;
-  var file = SpreadsheetApp.openById(ini_sets.file);
+  var file;
+  if (ini_sets.file) {
+    file = SpreadsheetApp.openById(ini_sets.file);
+  } else {
+    file = SpreadsheetApp.getActive();
+  }
   var sheetname, sheet, range;
   var sets_i, data, res = {};
   for (var k in ini_sets) {
