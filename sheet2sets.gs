@@ -209,7 +209,7 @@ function setSheetsDataEndpoints_(options) {
     var markers = options.data[options.row_marker - 1];
     for (var i = 0; i < markers.length; i++) {
       // find text in a row where marker is ↓
-      if (markers[i].startsWith(marker_data_starts)) {
+      if (startsWith_(markers[i], marker_data_starts)) {
         options.row_data_starts = parseInt(
           markers[i].replace(
             marker_data_starts, ''));
@@ -220,4 +220,17 @@ function setSheetsDataEndpoints_(options) {
   // #2.3. defaults
   options.row_data_starts = 2;
   return 0;
+}
+
+
+/**
+ * If text str starts with word
+ * 
+ * @param {string} str
+ * @param {string} word
+ */
+function startsWith_(str, word) {
+  str = '' + str;
+  word = '' + word;
+  return str.lastIndexOf(word, 0) === 0;
 }
