@@ -2,7 +2,7 @@
 // test:
 // https://script.google.com/u/0/home/projects/1GhlbHQx1ke_enwGc5G7kfVXio_5XMmfyNWMuOfWKi9vJioYzJlETMwMk/edit
 var default_sheet2script_options = {
-  file: '1KKJLYfcXsZfI0DXLyobiLVMz-vnMRO_R6or73ENeZKw',
+  // file: '1KKJLYfcXsZfI0DXLyobiLVMz-vnMRO_R6or73ENeZKw',
   data: {
     row_tags: 1,
     row_marker: 2, // use to create self-description for data
