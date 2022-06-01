@@ -1,5 +1,6 @@
 // 👋 https://github.com/Max-Makhrov/GoogleSheets/blob/master/other/dvl2022.gs
 // 👀 'About' section further in the code
+// Install: https://t.co/oKK9ARurUz
 
 
 
