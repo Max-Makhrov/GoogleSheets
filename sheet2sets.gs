@@ -367,6 +367,10 @@ function insertSheetLibrary_(tasks, sheet, sets) {
     }
     data.push(row);
   }
+	
+  if (data.length === 0) {
+    return 0;
+  }
 
   // insert new rows
   range = sheet.getRange(
