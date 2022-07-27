@@ -103,7 +103,7 @@ function test_me() {
 */
 function logJson_(j, chapter) {
   if (chapter) {
-    console.log(`*************************  << ${chapter} >>  **************************`);
+    console.log('*************************  << ' + chapter + ' >>  **************************');
   }
   console.log(JSON.stringify(j, null, 2))
 }
