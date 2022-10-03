@@ -267,6 +267,10 @@ function updateLibrary_(sets) {
       updates.push(task);
     } else {
       // add task on adding new Row
+      // update id!
+      if (!(sets.key in sets.data[key])) {
+        sets.data[key][sets.key] = key;
+      }
       task = {
         data: sets.data[key]
       }
