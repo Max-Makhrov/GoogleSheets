@@ -6,7 +6,66 @@
 /**********************************************            **************************************** */
 /********************************************* Testing Area *************************************** */
 /********************************************                ************************************** */
-function test_me() {
+function test_library() {
+  // https://docs.google.com/spreadsheets/d/1KKJLYfcXsZfI0DXLyobiLVMz-vnMRO_R6or73ENeZKw
+  var data1 = [
+    ['Max', 2],
+    ['Liu', 3]
+  ]
+  var header1 = ['name', 'q']
+  var options1 = {
+    data: data1,
+    header: header1,
+    key: 'name',
+    row_data_starts: 1
+  }
+
+  logJson_(data2library_(options1));
+  // {
+  //   "Max": {
+  //     "__row": 1,
+  //     "name": "Max",
+  //     "q": 2
+  //   },
+  //   "Liu": {
+  //     "__row": 2,
+  //     "name": "Liu",
+  //     "q": 3
+  //   }
+  // }
+
+  var data2 = [
+    ['DuckTales',	'Louie',	false],
+    ['Shrek',	'Shrek',	false],
+    ['Shrek',	'Princess Fiona',	true]
+  ]
+  var header2 = ['group',	'name',	'favourite'];
+  var options2 = {
+    data: data2,
+    header: header2,
+    key: ['group', 'name'],
+    row_data_starts: 2
+  }
+
+  logJson_(data2library_(options2));
+  // {
+  //   "Shrek,Shrek": {
+  //     "__row": 2,
+  //     "group": "Shrek",
+  //     "name": "Shrek",
+  //     "favourite": false
+  //   },
+  //   "Shrek,Princess Fiona": {
+  //     "__row": 3,
+  //     "group": "Shrek",
+  //     "name": "Princess Fiona",
+  //     "favourite": true
+  //   }
+  // }  
+}
+
+
+function test_all() {
   var sets = {};
   /**
    * #1. Copy sample file:
@@ -476,23 +535,47 @@ function data2jsongroups_(options) {
  * 
  * param {array} options.data 
  * param {array} options.header
- * param {string} options.key
+ * param {any} options.key - string or array
  * param {number} options.row_data_starts
  * 
  */
 function data2library_(options) {
   var tags = options.header; 
+  
+  /** get key as value or as array */
   var key = options.key;
+  if (!(Array.isArray(key))) {
+    key = [key];
+  }
+  
+  var keyIndexes = []
+  var getKeyIndex_ = function(ki) {
+    var res = tags.indexOf(ki);
+    if (res === -1) {
+      res = tags.indexOf('' + ki);
+    }
+    if (res === -1) {
+      throw '🤪Did not find key "' + ki + '" in tags: ' + tags.join(',')
+    }
+    keyIndexes.push(res);
+    return res;
+  }
+  key.forEach(getKeyIndex_);
+
   var start = options.row_data_starts -1;
   // loop rows
   var res = {}, chunk = {}, val, k;
+
+  var kArr = [];
   for (var i = start; i < options.data.length; i++) {
     chunk = {};
     chunk['__row'] = (i+1); // this may be rewritten by sets in Sheets
     for (var ii = 0; ii < tags.length; ii++) {
-      if (tags[ii] !== '' && tags[ii] === key) {
-        k = options.data[i][ii];
+      kArr = [];
+      for (var x = 0; x < keyIndexes.length; x++) {
+        kArr.push(options.data[i][keyIndexes[x]]);
       }
+      k = kArr.join(',');
       val = options.data[i][ii];
       chunk[tags[ii]] = val;
     }
