@@ -1,5 +1,4 @@
-function getTimeEllapse_(t)
-{
+function getTimeEllapse_(t) {
   var dif = new Date() - t;
   if (dif < 1000) { return dif + ' ms.'; }  
   var mm = parseInt(dif/1000), respo = '';
