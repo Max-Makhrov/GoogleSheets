@@ -1,119 +1,101 @@
-// sample file:
-// https://docs.google.com/spreadsheets/d/10Lhj0V6m_RjaPusRTP-siXvqJfW4TZTxMzzolUVjYeU/copy
-
-function test_onEdit() {
-  var e = {
-    range: SpreadsheetApp
-      .getActive()
-      .getSheetByName('Sheet1')
-      .getRange("A2:Z3")
-  }
-  onEdit(e)
-}
-
-
+// https://github.com/Max-Makhrov/GoogleSheets/blob/master/sheets/fixRefOnEdit.gs
 function onEdit(e) {
-  fixRefErrors_(e);
+  // add more functions if needed
+  fixArrayFormulaRefErrors_(e);
+  // add more functions if needed
 }
 
 /**
- * fix #Ref errors when user overwrites
- * values with onEdit simple trigger
+ * onEdit
+ * 
+ * Trigger event for Google Sheets
+ * https://developers.google.com/apps-script/guides/triggers/events
+ * 
+ * @typedef {Object} Event
+ * @property {SpreadsheetApp.Range} range
+ * @property {SpreadsheetApp.Spreadsheet} source
  */
-function fixRefErrors_(e) {
-  /** SETTINGS ******************************************* */
-  var sheetnames = ['Sheet1'];
-  var formularows = [1];
-  /******************************************************* */
 
-  // except edits on other sheets
-  var range = e.range;
-  var sheet = range.getSheet();
-  var index = sheetnames.indexOf(sheet.getName())
-  if (index < 0) {
-    return -1;
-  }
+/**
+ * @param {Event} e
+ */
+function fixArrayFormulaRefErrors_(e) {
 
-  // detect formula range
-  var width = range.getWidth();
-  var column = range.getColumn();
-  var row = formularows[index];
-  var rangeCheck = sheet.getRange(row, column, 1, width);
-  var values = rangeCheck.getValues()[0];
+  var lookFor = '#REF!';
 
-  // detect if #Ref-errors are in a range
-  var isRefColumns = [], val;
-  for (var i = 0; i < width; i++) {
-    val = values[i];
-    if (val === '#REF!') {
-      isRefColumns.push(i+column);
+  // 🦆type
+  // error gives value = #REF
+  // #REF error also has a formula in it
+  // #REF is above the edited range
+  // #REF is in the previous or the save column
+  // values between #REF and edited range are blank
+  //
+  // can also use Sheets API and see error message
+  // https://stackoverflow.com/questions/75925161
+
+  var numRow = e.range.getRow();
+  if (numRow === 1) return;
+  var numCol = e.range.getColumn();
+  if (numCol === 1) return;
+
+  var sheet = e.range.getSheet();
+  var range = sheet.getRange(1,1,numRow, numCol);
+  var values = range.getValues();
+
+  var rowCheckFrom = 0;
+  var colCheckFrom = 0;
+
+  /** 
+   * @param {Number} rowIndex
+   * @param {Number} columnIndex
+   * 
+   * @returns {String} comment - may use to debug
+   */
+  function _dealWith(rowIndex, columnIndex) {
+    if (rowIndex === numRow - 1 && columnIndex === numCol - 1) {
+      return 'do not check self';
     }
-  }
-
-  // fix errors
-  var columngroups = groupNumbers_(isRefColumns);
-  var rClear , group;
-  var last = sheet.getLastRow();
-  for (i = 0; i < columngroups.length; i++) {
-    group = columngroups[i];
-    rClear = sheet.getRange(
-      row + 1,
-      group.start,
-      last,
-      group.count
-    );
-    rClear.clearContent();
-  }
-
-  return ; // OK
-  
-}
-
-/**
- * convert array of sorted numbers
- * to object of groups of numbers
- * 
- * [1,2,3,  4,5,   8,9] →
- * 
- * [{start: 1, end: 5, count: 5},
- *   {start: 8, end: 9, count: 2}]
- * 
- * @arr {array} of sorted numbers
- * 
- * @retuen {array} of objects with desired ranges
- */
-// function test_groupNumbers() {
-//   var array = [1,2,3,4,5,  8,9,  500,501];
-//   var res = groupNumbers_(array);
-//   console.log(res);
-//   // [ { start: 1, end: 5, count: 5 },
-//   //   { start: 8, end: 9, count: 2 },
-//   //   { start: 500, end: 501, count: 2 } ]
-//   console.log(groupNumbers_([]))
-// }
-function groupNumbers_(array) {
-  if (array.length === 0) {
-    return [];
-  }
-  var i = 0;
-  var node = {
-    start: array[i], 
-    end: array[i],
-    count: 1
-  }
-  var res = [node];
-  for (i = 1; i < array.length; i++) {
-    if (array[i-1]+1 === array[i]) {
-      node.end++;
-      node.count++;
-    } else {
-      node = {
-        start: array[i], 
-        end: array[i],
-        count: 1
+    var checkValue = values[rowIndex][columnIndex];
+    if (checkValue === '') {
+      return 'empty cell, continue checking without changes';
+    }
+    if (checkValue === lookFor) {
+      var r = sheet.getRange(rowIndex+1, columnIndex+1);
+      if (isRangeAFormula_(r)) {
+        e.range.clearContent();
+        stopLoopExecution_();
+        return '😎 fixed';
       }
-      res.push(node);
+    }
+    rowCheckFrom = rowIndex + 1;
+    return 'reduced the number of cells to check';
+  }
+
+  function stopLoopExecution_() {
+    rowCheckFrom = numRow;
+    colCheckFrom = numCol;
+  }
+
+  // start search from the column above edited one
+  // move to the top by row first
+  // stop if not blank and not #REF value is found
+  // then move to the previous row
+  for (var ii = numCol - 1; ii >= colCheckFrom; ii--) {
+    for (var i = numRow - 1; i >= rowCheckFrom; i--) { 
+      _dealWith(i, ii);
     }
   }
-  return res;
+
+
+}
+
+/**
+ * @param {SpreadsheetApp.Range} range
+ * 
+ * @returns {Boolean}
+ */
+function isRangeAFormula_(range) {
+  var f = range.getFormula();
+  if (f === '') return false;
+  return true;
 }
