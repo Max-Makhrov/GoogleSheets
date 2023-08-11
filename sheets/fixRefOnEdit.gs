@@ -85,8 +85,6 @@ function fixArrayFormulaRefErrors_(e) {
       _dealWith(i, ii);
     }
   }
-
-
 }
 
 /**
