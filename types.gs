@@ -12,3 +12,14 @@
  * @property {boolean} muteHttpExceptions - If true, doesn't throw on failure.
  * @property {boolean} escaping - If false, no URL character escaping. 
  */
+
+/**
+ * onEdit
+ * 
+ * Trigger event for Google Sheets
+ * https://developers.google.com/apps-script/guides/triggers/events
+ * 
+ * @typedef {Object} Event
+ * @property {SpreadsheetApp.Range} range
+ * @property {SpreadsheetApp.Spreadsheet} source
+ */
