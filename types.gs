@@ -33,7 +33,6 @@
    * @property {Array<SheetsApiBatchUpdateValuesTask>} data
    * @property {String} valueInputOption - USER_ENTERED
    */
-
   /** 
    * @typedef {Object} SheetsApiBatchUpdateValuesTask 
    * @property {String} range - 'Sheet1'!Z4:AI4
