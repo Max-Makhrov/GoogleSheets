@@ -13,6 +13,7 @@
  * @property {boolean} escaping - If false, no URL character escaping. 
  */
 
+// triggers
 /**
  * onEdit
  * 
@@ -23,3 +24,23 @@
  * @property {SpreadsheetApp.Range} range
  * @property {SpreadsheetApp.Spreadsheet} source
  */
+
+// Sheets API
+  /**
+   * Sheets.Spreadsheets.Values.batchUpdate(batchresource, clientId);
+   * 
+   * @typedef {Object} sheetsApiBatchUpdateResource
+   * @property {Array<SheetsApiBatchUpdateValuesTask>} data
+   * @property {String} valueInputOption - USER_ENTERED
+   */
+
+  /** 
+   * 
+   * 
+   * @typedef {Object} SheetsApiBatchUpdateValuesTask 
+   * @property {String} range - 'Sheet1'!Z4:AI4
+   * @property {String} majorDimension - ROWS
+   * @property {Array<Array>} values
+  */
+
+
