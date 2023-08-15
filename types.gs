@@ -35,8 +35,6 @@
    */
 
   /** 
-   * 
-   * 
    * @typedef {Object} SheetsApiBatchUpdateValuesTask 
    * @property {String} range - 'Sheet1'!Z4:AI4
    * @property {String} majorDimension - ROWS
