@@ -20,7 +20,7 @@
  * Trigger event for Google Sheets
  * https://developers.google.com/apps-script/guides/triggers/events
  * 
- * @typedef {Object} Event
+ * @typedef {Object} OnEditEvent
  * @property {SpreadsheetApp.Range} range
  * @property {SpreadsheetApp.Spreadsheet} source
  */
