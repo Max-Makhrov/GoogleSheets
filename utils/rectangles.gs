@@ -28,6 +28,8 @@ function array2Rectangle_(arr, rowPrepend, rowAppend) {
 /**
  * @param {Array<Object>} objects
  * @param {OptionsObjects2Rectangle} [options]
+ * @returns {Rectangle}
+ * TODO: to string conversions
  */
 function objects2Rectangle_(objects, options) {
   options = options || {};
@@ -73,7 +75,7 @@ function objects2Rectangle_(objects, options) {
   function object2Row_(object, headers) {
     var result = [], val;
     for (var i = 0; i < headers.length; i++) {
-      val = '' + object[headers[i]];
+      val = object[headers[i]];
       result.push(val);
     }
     return result;
