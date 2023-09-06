@@ -21,34 +21,55 @@ function array2Rectangle_(arr, rowPrepend, rowAppend) {
 
 /**
  * @param {Array<Object>} objects
- * @param {Array<string>} keys
- * 
- * @returns {Rectangle}
+ * @param {Array} [headers]
+ * @param {Boolean} [skipHeaders]
  */
-function objects2rectangle_(objects, keys) {
-  var res = [], row = [];
+function objects2Rectangle_(objects, headers, skipHeaders) {
+  headers = headers || objects2headers_(objects);
+  var result = [];
+  if (!skipHeaders) {
+    result = [headers];
+  }
   for (var i = 0; i < objects.length; i++) {
-    row = object2row_(objects[i], keys);
-    res.push(row);
+    result.push(object2Row_(objects[i], headers));
   }
-  return res;
-}
-
-/**
- * @param {Object} obj
- * @param {Array<string>} keys
- * 
- * @returns {Array} row
- */
-function object2row_(obj, keys) {
-  var row = [], val, k;
-  for (var i = 0; i < keys.length; i++) {
-    val = '';
-    k = keys[i];
-    if ( obj.hasOwnProperty(k) ) {
-      val = obj[k]
+  /**
+    * @param {Array} arr
+    * @param {Object} [keys] 
+  */
+  function array2Keys_(arr, keys) {
+    keys = keys || {};
+    for (var i = 0; i < arr.length; i++) {
+      keys[arr[i]] = true;
     }
-      row.push(val);
+    return keys;
   }
-  return row;
+  /**
+   * @param {Array<Object>} objects
+   * @returns {Array} headers
+   */
+  function objects2headers_(objects) {
+  var oHeaders = {}, obj;
+    for (var i = 0; i < objects.length; i++) {
+      obj = objects[i];
+      oHeaders = array2Keys_(Object.keys(obj), oHeaders);
+    }
+    var headers = Object.keys(oHeaders);
+    return headers;
+  }
+  /**
+   * @param {Object} object
+   * @param {Array} headers
+   * 
+   * @returns {Array}
+   */
+  function object2Row_(object, headers) {
+    var result = [], val;
+    for (var i = 0; i < headers.length; i++) {
+      val = '' + object[headers[i]];
+      result.push(val);
+    }
+    return result;
+  }
+  return result;
 }
