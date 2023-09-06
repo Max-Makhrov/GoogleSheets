@@ -20,13 +20,20 @@ function array2Rectangle_(arr, rowPrepend, rowAppend) {
 
 
 /**
- * @param {Array<Object>} objects
- * @param {Array} [headers]
- * @param {Boolean} [skipHeaders]
+ * @typedef {Object} OptionsObjects2Rectangle
+ * @property {Array} [headers]
+ * @property {Boolean} [skip_headers]
  */
-function objects2Rectangle_(objects, headers, skipHeaders) {
-  headers = headers || objects2headers_(objects);
+
+/**
+ * @param {Array<Object>} objects
+ * @param {OptionsObjects2Rectangle} [options]
+ */
+function objects2Rectangle_(objects, options) {
+  options = options || {};
+  var headers = options.headers || objects2headers_(objects);
   var result = [];
+  var skipHeaders = options.skip_headers
   if (!skipHeaders) {
     result = [headers];
   }
