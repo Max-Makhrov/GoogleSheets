@@ -216,3 +216,37 @@ function appendValues2Sheet_(values, options) {
     return null;
   }
 }
+
+
+/**
+ * @param {String} [ssIdFrom]
+ * @param {String} sheetNameFrom
+ * @param {String} [ssIdTo]
+ * @param {String} sheetNameTo
+ */
+function copyDataValuesBetweenSpreadsheets_(ssIdFrom, sheetNameFrom, ssIdTo, sheetNameTo) {
+  var ssTo = getSpreadsheetSafely_(ssIdTo);
+  var sheetTo = ssTo.getSheetByName(sheetNameTo);
+  var dataFrom = getDataBySpreadsheetIdSheetName_(ssIdFrom, sheetNameFrom);
+
+  sheetTo.clearContents();
+  var rangeTo = sheetTo.getRange(1,1,dataFrom.length, dataFrom[0].length);
+  rangeTo.setValues(dataFrom);
+
+  return 0;
+}
+
+
+/**
+ * @param {String} [ssId]
+ * @param {String} sheetName
+ * 
+ * @returns {Array<Array>} data
+ */
+function getDataBySpreadsheetIdSheetName_(ssId, sheetName) {
+  var ss = getSpreadsheetSafely_(ssId);
+  var s = ss.getSheetByName(sheetName);
+  var r = s.getDataRange();
+  var d = r.getValues();
+  return d;
+}
