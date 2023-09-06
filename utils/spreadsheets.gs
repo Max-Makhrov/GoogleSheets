@@ -99,3 +99,120 @@ function getFilePrivacy_(id) {
 
   return privacy;
 }
+
+
+/**
+ * @typedef {Object} OptionsAppendValues2Sheet
+ * @property {SpreadsheetApp.Spreadsheet} [ss]
+ * @property {String} [ss_id]
+ * @property {SpreadsheetApp.Sheet} [sheet]
+ * @property {String} [sheet_name]
+ * @property {Number|String} [sheet_id]
+ * @property {Number} [row_from]
+ * @property {Number} [column_from]
+ * @property {Boolean} [clear_contents]
+ * @property {Boolean} [not_throw_errors]
+ * @property {Boolean} [put_to_first_free_row]
+ */
+
+/**
+ * @param {Array<Array>} values
+ * @param {OptionsAppendValues2Sheet} [options]
+ */
+function appendValues2Sheet_(values, options) {
+  options = options || {};
+  var msg;
+  var badEnd_ = function(msg) {
+    msg = '😖' + msg;
+    if (options.not_throw_errors) {
+      console.log(msg);
+      return;
+    } else {
+      throw msg;
+    }
+  }
+  if (!isValidRangeArray_(values)) {
+    msg = 'given values to paste is not valid rectangle';
+    return badEnd_(msg);
+  }
+  var ss = getSpreadsheetSafely_(options.ss_id, options.ss);
+  if (!ss) {
+    msg = 'could not get spreadsheet: ' + options.ss_id;
+    return badEnd_(msg);
+  }
+
+  /**
+   * @param {Array[[]]} array
+   * @returns {Boolean}
+   */
+  function isValidRangeArray_(array) {
+    if (!array) return false;
+    if (!Array.isArray(array) || array.length < 1 || !Array.isArray(array[0])) {
+      return false; // Array must be two-dimensional.
+    }
+    var numRows = array.length;
+    var numCols = array[0].length;
+    for (var i = 1; i < numRows; i++) {
+      if (array[i].length !== numCols) {
+        return false; // All rows must have the same length.
+      }
+    }
+    return true; // Array is valid for range.
+  }
+
+  /** @type Spreadsheet.Sheet */
+  var sheet;
+  if (options.sheet) {
+    sheet = options.sheet;
+  } else if (options.sheet_name) {
+    sheet = ss.getSheetByName(options.sheet_name);
+  } else if (options.sheet_id) {
+    sheet = getSheetById_(ss, options.sheet_id);
+    if (!sheet) {
+      msg = 'could not get sheet with id = ' + options.sheet_id;
+      return badEnd_(msg);
+    }
+  } else {
+    sheet = ss.getSheets()[0];
+  }
+  if (!sheet) {
+    msg = 'sheet was not found';
+    return badEnd_(msg);
+  }
+
+  var row1 = options.row_from || 1;
+  var col1 = options.column_from || 1;
+  if (options.put_to_first_free_row) {
+    row1 = sheet.getLastRow() + 1;
+  }
+  var range = sheet.getRange(
+    row1,
+    col1,
+    values.length,
+    values[0].length
+  );
+
+  if (options.clear_contents && !options.put_to_first_free_row) {
+    var rowsOffset = sheet.getMaxRows() - row1 + 1;
+    var rangeDelete = range.offset(0,0,rowsOffset);
+    rangeDelete.clearContent();
+  }
+
+  range.setValues(values);
+
+  /**
+   * @param {SpreadsheetApp.Spreadsheet} ss
+   * @param {Number | String} sheetId
+   * 
+   * @returns {SpreadsheetApp.Sheet}
+   */
+  function getSheetById_(ss, sheetId) {
+    var sheets = ss.getSheets();
+    for(var i = 0; i < sheets.length; i++) {
+      if(sheets[i].getSheetId() == sheetId) {
+        return sheets[i];
+      }
+    }
+    return null;
+  }
+}
