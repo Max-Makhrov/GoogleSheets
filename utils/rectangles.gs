@@ -82,3 +82,39 @@ function objects2Rectangle_(objects, options) {
   }
   return result;
 }
+
+
+/**
+ * @param {Object} dataObject
+ * @param {String} keyReturn
+ * @param {String} keyNestedArrays
+ * 
+ * @returns {Arary<Array>}
+ */
+function nestedJson2rectangle_(data, nameKey, foldersKey) {
+  var maxDepth = 0;
+  function recursiveCreateArray(obj, depth) {
+    if (maxDepth < depth) maxDepth = depth;
+    var row = Array(depth).fill('');
+    row.push(obj[nameKey]);
+
+    result.push(row);
+
+    if (Array.isArray(obj[foldersKey])) {
+      obj[foldersKey].forEach((folder) => {
+        recursiveCreateArray(folder, depth + 1);
+      });
+    }
+  }
+
+  var result = [];
+  recursiveCreateArray(data, 0);
+
+  for (var i = 0; i < result.length; i++) {
+    for (var ii = 0; ii < maxDepth+1; ii++) {
+      result[i][ii] = result[i][ii] || '';
+    }
+  }
+
+  return result;
+}
