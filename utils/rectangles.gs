@@ -85,23 +85,23 @@ function objects2Rectangle_(objects, options) {
 
 
 /**
- * @param {Object} dataObject
- * @param {String} keyReturn
- * @param {String} keyNestedArrays
+ * @param {Object} data
+ * @param {String} key
+ * @param {String} nestKey
  * 
  * @returns {Arary<Array>}
  */
-function nestedJson2rectangle_(data, nameKey, foldersKey) {
+function nestedJson2rectangle_(data, key, nestKey) {
   var maxDepth = 0;
   function recursiveCreateArray(obj, depth) {
     if (maxDepth < depth) maxDepth = depth;
     var row = Array(depth).fill('');
-    row.push(obj[nameKey]);
+    row.push(obj[key]);
 
     result.push(row);
 
-    if (Array.isArray(obj[foldersKey])) {
-      obj[foldersKey].forEach((folder) => {
+    if (Array.isArray(obj[nestKey])) {
+      obj[nestKey].forEach((folder) => {
         recursiveCreateArray(folder, depth + 1);
       });
     }
@@ -113,6 +113,36 @@ function nestedJson2rectangle_(data, nameKey, foldersKey) {
   for (var i = 0; i < result.length; i++) {
     for (var ii = 0; ii < maxDepth+1; ii++) {
       result[i][ii] = result[i][ii] || '';
+    }
+  }
+
+  return result;
+}
+
+/**
+ * @param {Arary<Array>} arr
+ * @param {String} key
+ * @param {String} nestKey
+ * 
+ * @returns {Object}
+ */
+function rectangle2nestedJson_(arr, key, nestKey) {
+  const result = { [key]: "", [nestKey]: [] };
+  const stack = [result];
+
+  for (const item of arr) {
+    const name = item.find(x => x);
+    const depth = item.findIndex(x => x);
+
+    if (name) {
+      const obj = { [key]: name, [nestKey]: [] };
+
+      if (depth < stack.length) {
+          stack.length = depth + 1;
+      }
+
+      stack[stack.length - 1][nestKey].push(obj);
+      stack.push(obj);
     }
   }
 
