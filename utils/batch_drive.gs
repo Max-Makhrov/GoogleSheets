@@ -6,6 +6,15 @@
  * @property {String} teamDriveId
  * @property {String} driveId
  */
+/**
+ * @typedef {Object} BatchFileInfo
+ * @property {String} kind
+ * @property {String} id
+ * @property {String} name
+ * @property {String} mimeType
+ * @property {String} teamDriveId
+ * @property {String} driveId
+ */
 
 /**
  * Also works with Shared Drives!
@@ -26,6 +35,51 @@ function batchCreateFolders_(folderId, folderNames) {
   }
   var result = EDo({ batchPath: "batch/drive/v3", requests: batchReqs });
   return result;
+}
+
+/**
+ * @param {String} folderIdFrom
+ * @param {String} folderIdTo
+ * 
+ * @returns {Array<BatchFileInfo>} copied files
+ */
+function batchCopyFiles_(folderIdFrom, folderIdTo) {
+  
+  var files = driveAppListFiles_(folderIdFrom);
+  
+  var  requests = files.map(({id, title}) => ({
+    method: "POST",
+    endpoint: `https://www.googleapis.com/drive/v3/files/${id}/copy?supportsAllDrives=true`,
+    requestBody: {parents: [folderIdTo], title},
+  }));
+  var result = EDo({batchPath: "batch/drive/v3", requests});
+  return result;
+}
+
+
+/**
+ * @typedef {FolderInfo}
+ * @property {String} id
+ * @property {String} title
+ */
+/**
+ * https://developers.google.com/drive/api/reference/rest/v3/files/list
+ * 
+ * @param {String} folderId
+ * 
+ * @returns {Array<FolderInfo>} info
+ */
+function driveAppListFiles_(folderId) {
+  var request = { 
+    q: `'${folderId}' in parents and trashed=false`, 
+    fields: "items(id,title)", 
+    supportsAllDrives: true,
+    includeItemsFromAllDrives: true 
+    };
+  var list = Drive.Files.list(request).items;
+
+  Drive.Files.list()
+  return list;
 }
 
 
