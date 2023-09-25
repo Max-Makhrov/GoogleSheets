@@ -75,7 +75,7 @@ function batchCopyFiles_(folderIdFrom, folderIdTo) {
  */
 function driveAppListFiles_(folderId) {
   var request = { 
-    q: `'${folderId}' in parents and trashed=false`, 
+    q: `'${folderId}' in parents and trashed=false and mimeType!='application/vnd.google-apps.folder'`, 
     fields: "items(id,title)", 
     supportsAllDrives: true,
     includeItemsFromAllDrives: true 
