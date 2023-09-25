@@ -46,7 +46,11 @@ function batchCreateFolders_(folderId, folderNames) {
 function batchCopyFiles_(folderIdFrom, folderIdTo) {
   
   var files = driveAppListFiles_(folderIdFrom);
-  
+  if (files.length === 0) {
+    console.log('no files to copy');
+    return;
+  }
+
   var  requests = files.map(({id, title}) => ({
     method: "POST",
     endpoint: `https://www.googleapis.com/drive/v3/files/${id}/copy?supportsAllDrives=true`,
