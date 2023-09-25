@@ -54,7 +54,7 @@ function batchCopyFiles_(folderIdFrom, folderIdTo) {
   var  requests = files.map(({id, title}) => ({
     method: "POST",
     endpoint: `https://www.googleapis.com/drive/v3/files/${id}/copy?supportsAllDrives=true`,
-    requestBody: {parents: [folderIdTo], title},
+    requestBody: {parents: [folderIdTo], name: title},
   }));
   var result = EDo({batchPath: "batch/drive/v3", requests});
   return result;
