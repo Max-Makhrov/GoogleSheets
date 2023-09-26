@@ -17,6 +17,12 @@
  */
 
 /**
+ * @typedef {Object} BatchFileInfoShort
+ * @property {String} id
+ * @property {String} title
+ */
+
+/**
  * Also works with Shared Drives!
  * 
  * @param {String} folderId
@@ -38,6 +44,8 @@ function batchCreateFolders_(folderId, folderNames) {
 }
 
 /**
+ * https://developers.google.com/drive/api/reference/rest/v3/files/copy
+ * 
  * @param {String} folderIdFrom
  * @param {String} folderIdTo
  * 
@@ -47,11 +55,21 @@ function batchCopyFiles_(folderIdFrom, folderIdTo) {
   
   var files = driveAppListFiles_(folderIdFrom);
   if (files.length === 0) {
-    console.log('no files to copy');
+    console.log('no files to copy ' + folderIdFrom);
     return;
   }
+  
+  return batchCopyFilesByFilesInfo_(folderIdTo, files);
 
-  var  requests = files.map(({id, title}) => ({
+}
+
+
+/**
+ * @param {String} folderIdTo
+ * @package {Array<BatchFileInfoShort>}
+ */
+function batchCopyFilesByFilesInfo_(folderIdTo, filesInfo) {
+  var  requests = filesInfo.map(({id, title}) => ({
     method: "POST",
     endpoint: `https://www.googleapis.com/drive/v3/files/${id}/copy?supportsAllDrives=true`,
     requestBody: {parents: [folderIdTo], name: title},
@@ -61,17 +79,13 @@ function batchCopyFiles_(folderIdFrom, folderIdTo) {
 }
 
 
-/**
- * @typedef {FolderInfo}
- * @property {String} id
- * @property {String} title
- */
+
 /**
  * https://developers.google.com/drive/api/reference/rest/v3/files/list
  * 
  * @param {String} folderId
  * 
- * @returns {Array<FolderInfo>} info
+ * @returns {Array<BatchFileInfoShort>} info
  */
 function driveAppListFiles_(folderId) {
   var request = { 
@@ -82,7 +96,6 @@ function driveAppListFiles_(folderId) {
     };
   var list = Drive.Files.list(request).items;
 
-  Drive.Files.list()
   return list;
 }
 
