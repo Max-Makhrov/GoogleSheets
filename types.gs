@@ -24,6 +24,17 @@
  * @property {SpreadsheetApp.Range} range
  * @property {SpreadsheetApp.Spreadsheet} source
  */
+/**
+ * onFormSubmit from Spreadsheet
+ *
+ * https://developers.google.com/apps-script/guides/triggers/events
+ * 
+ * @typedef {Object} OnFormSubmitSrpeadsheetTriggerEvent
+ * @property {SpreadsheetApp.Range} range
+ * @property {Array} values
+ * @property {Object} namedValues - the question names and values from the form submission
+ * @property {String} triggerUid
+ */
 
 // Sheets API
   /**
