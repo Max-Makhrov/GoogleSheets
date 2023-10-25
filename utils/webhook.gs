@@ -2,6 +2,7 @@
 // 1. Deploy this as Web App
 // 2. Copy Web App URL
 // 3. Go to your application and set up a new WebHook, use WebApp URL there.
+// 4. Run test webhook event, go to Apps Script again, and run `readHookFromCahce` function
 // https://github.com/Max-Makhrov/GoogleSheets
 // happy coding!
 
