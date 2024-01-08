@@ -1,5 +1,10 @@
 /*
   // Usage:
+  // If you reach execution limits or rates with your WebHook or event-driven triggers,
+  // Use this strategy: 
+  //   1) save tasks to Cache
+  //   2) use time-driven trigger to execute saved tasks
+  //   3) `CacheTaskManager` will help you to achieve that =)
 
   // common
   const tasksList = new CacheTaskManager();
