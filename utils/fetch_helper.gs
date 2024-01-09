@@ -25,13 +25,22 @@ function FetchHelper() {
    * @returns {String}
    */
   self.getUrlParametrized = function(obj, url) {
+    const params = self.getUrlParameters(obj);
+    return url + '?' + params; 
+  }
+
+  /**
+   * @param {Object} obj
+   * 
+   * @returns {String}
+   */
+  self.getUrlParameters = function(obj) {
     let v, vals = [];
     for (let k in obj) {
       v = k + '=' + encodeURIComponent(obj[k]);
       vals.push(v);
     }
-    const params = vals.join('&');
-    return url + '?' + params; 
+    return vals.join('&');;
   }
-}
 
+}
