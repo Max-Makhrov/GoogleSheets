@@ -33,21 +33,5 @@ function FetchHelper() {
     const params = vals.join('&');
     return url + '?' + params; 
   }
-
 }
 
-/**
- * @param {Object} obj
- * @param {String} url
- * 
- * @returns {String}
- */
-function getUrlParametrized_(obj, url) {
-  let v, vals = [];
-  for (let k in obj) {
-    v = k + '=' + encodeURIComponent(obj[k]);
-    vals.push(v);
-  }
-  const params = vals.join('&');
-  return url + '?' + params;
-}
