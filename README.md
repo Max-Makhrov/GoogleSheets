@@ -11,6 +11,10 @@ Add-on dev code samples:
  - https://github.com/Max-Makhrov/bigquery_gs
  - Installation tips: https://github.com/Max-Makhrov/gitignore-add-folder-with-node-install-trick
 
+Develop locally
+
+ - https://github.com/Max-Makhrov/gasfive
+
 Experimental code samples:
 
  - https://github.com/Max-Makhrov/google-form-to-sheet.gs
