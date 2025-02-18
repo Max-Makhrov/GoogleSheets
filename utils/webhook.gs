@@ -28,6 +28,10 @@ function doPost(e) {
   } catch (err) {
     set2Memory_(webhookKeys.error, err);
   }
+  // var resulting = Libb.webAppReturn(e); // Use library code from file: `webhookLib`
+  // return ContentService
+  //  .createTextOutput(JSON.stringify(resulting))
+  //  .setMimeType(ContentService.MimeType.JSON);
 }
 
 // helpers
