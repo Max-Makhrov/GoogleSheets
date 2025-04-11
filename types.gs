@@ -52,3 +52,31 @@
   */
 
 
+/**
+ * @typedef {Object} AppScriptFile
+ * @prop {String} name
+ * @prop {'JSON' | 'SERVER_JS' | 'HTML'} type
+ * @prop {String} source
+ * @prop {GoogleUserInfo} lastModifyUser
+ * @prop {String} createTime
+ * @prop {String} updateTime
+ * @prop {AppsScriptFunctionSet} functionSet
+ */
+
+/**
+ * @typedef {Object} GoogleUserInfo
+ * @prop {String} domain
+ * @prop {String} email
+ * @prop {String} name
+ * @prop {String} photoUrl
+ */
+
+/**
+ * @prop {Object} AppsScriptFunctionSet
+ * @prop {AppsScriptFunctionInfo[]} values
+ */
+
+/**
+ * @prop {Object} AppsScriptFunctionInfo
+ * @prop {String} name
+ */
