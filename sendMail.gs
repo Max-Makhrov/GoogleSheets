@@ -12,6 +12,20 @@
 //   console.log(res);
 // }
 
+/**
+ * @typedef {Object} MailSet
+ * @prop {Boolean} do
+ * @prop {String} to - comma separated
+ * @prop {String} subject
+ * @prop {String} body - HTML
+ */
+
+/**
+ * @param {MailSet} set
+ * 
+ * @returns {Number}
+ */
+
 function sendMail_(set) {
   // ##1. Checks
   if (!set.do) {
