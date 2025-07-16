@@ -31,3 +31,8 @@ Other
  - Google Forms https://gist.github.com/Max-Makhrov/1f22aa2534dea93439fc0559b6ca1d67
  - Function timer https://gist.github.com/Max-Makhrov/bebfee0af168f844e574290569691754
 
+Web-Hooks
+
+ - Web-Hook https://github.com/Max-Makhrov/GoogleSheets/blob/master/utils/webhook.gs
+ - Library https://github.com/Max-Makhrov/GoogleSheets/blob/master/utils/webhookLib.gs
+
