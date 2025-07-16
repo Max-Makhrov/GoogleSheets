@@ -25,7 +25,6 @@
  * 
  * @returns {Number}
  */
-
 function sendMail_(set) {
   // ##1. Checks
   if (!set.do) {
